@@ -5,6 +5,9 @@
 *	
 *	http://www.invipay.com
 *
+*	@author Kuba Pilecki (kpilecki@invipay.com)
+* 	@version 1.0.4
+*
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
 *	conditions are met: Redistributions of source code must retain the
@@ -47,8 +50,6 @@ class PaygateApiClient extends AbstractRestApiClient
 	public function paymentStatusFromCallback($callbackData, $callbackDataFormat = CallbackDataFormat::JSON)
 	{
 		$output = null;
-
-		file_put_contents("/Volumes/Files/Users/Vir/Work/Aero Sandbox/Presta/dump.json", $callbackData);
 
 		switch ($callbackDataFormat) {
 			case CallbackDataFormat::JSON: $output = $this->__mapArrayToObject(json_decode($callbackData, true), 'PaymentData', false); break;

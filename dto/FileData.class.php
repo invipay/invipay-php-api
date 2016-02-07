@@ -5,6 +5,9 @@
 *   
 *   http://www.invipay.com
 *
+*   @author Kuba Pilecki (kpilecki@invipay.com)
+*   @version 1.0.4
+*
 *   Redistribution and use in source and binary forms, with or
 *   without modification, are permitted provided that the following
 *   conditions are met: Redistributions of source code must retain the
