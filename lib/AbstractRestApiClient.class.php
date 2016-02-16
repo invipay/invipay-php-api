@@ -115,7 +115,7 @@ abstract class AbstractRestApiClient
 			$header = trim(substr($response, 0, $header_size));
 			$body = trim(substr($response, $header_size));
 
-			//$this->__checkResponseHash($header, $body);
+			$this->__checkResponseHash($header, $body);
 
 			$output = $this->__createResponseObject($status, $body, $outputType, $outputIsArray);
 
@@ -165,7 +165,22 @@ abstract class AbstractRestApiClient
 		throw new SignatureException("Wrong response signature! Response data was either manipulated between server and client or server you've contacted isn't InviPay server!", array('received_signature' => $signature, 'proper_signature' => $calculatedSignature, 'message_body' => $body));
 	}
 
-	protected function __calculateBodyHash($body)
+	public function __checkRequestHash($body)
+	{
+		$body = trim($body);
+		$key = str_replace('-', '_', strtoupper('HTTP_' . self::HEADER_SIGNATURE_KEY));
+		$goodHash = $this->__calculateBodyHash($body);
+		$sentHash = array_key_exists($key, $_SERVER) ? $_SERVER[$key] : '';
+
+		if ($goodHash != $sentHash)
+		{
+			throw new SignatureException("Wrong request signature! This request was either manipulated between server and client or server that sent this request isn't InviPay server!", array('received_signature' => $sentHash, 'proper_signature' => $goodHash, 'message_body' => $body));
+		}
+
+		return true;
+	}
+
+	public function __calculateBodyHash($body)
 	{
 		$output = hash(AbstractRestApiClient::SIGNING_ALGORHITM_NAME, $body.$this->signatureKey);
 		return $output;
@@ -218,8 +233,6 @@ abstract class AbstractRestApiClient
 		else if (is_callable($outputType)){ return $outputType($response); }
 		else if (is_string($outputType) && is_array($response))
 		{
-			//var_dump($response);
-
 			if (!$outputIsArray){ $response = array($response); }
 
 			$rclass = new ReflectionClass($outputType);

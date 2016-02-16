@@ -53,6 +53,9 @@ if ($paymentData !== null)
 					"Last error:\r\n-----\r\n" .
 					print_r(error_get_last(), true) .
 					"\r\n\r\n" . 
+					"_SERVER:\r\n-----\r\n" .
+					print_r($_SERVER, true) .
+					"\r\n\r\n" . 
 					"Script input data:\r\n-----\r\n" .
 					file_get_contents('php://input');
 	file_put_contents($outputPath, $outputData);

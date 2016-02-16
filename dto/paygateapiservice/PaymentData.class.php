@@ -43,6 +43,9 @@ class PaymentData extends BaseApiData
     protected $timeoutDate;
     protected $status;
     protected $note;
+    protected $transactionValue;
+    protected $transactionIssueDate;
+    protected $transactionDueDate;
 
     public function getPaymentId(){ return $this->paymentId; }
     public function setPaymentId($paymentId){ $this->paymentId = $paymentId; }
@@ -61,6 +64,15 @@ class PaymentData extends BaseApiData
 
     public function getNote(){ return $this->note; }
     public function setNote($note){ $this->note = $note; }
+
+    public function getTransactionValue(){ return $this->transactionValue; }
+    public function setTransactionValue($transactionValue){ $this->transactionValue = $transactionValue; }
+
+    public function getTransactionIssueDate(){ return $this->transactionIssueDate; }
+    public function setTransactionIssueDate($transactionIssueDate){ $this->transactionIssueDate = $transactionIssueDate; }
+
+    public function getTransactionDueDate(){ return $this->transactionDueDate; }
+    public function setTransactionDueDate($transactionDueDate){ $this->transactionDueDate = $transactionDueDate; }
 }
 
 ?>

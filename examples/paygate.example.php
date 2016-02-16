@@ -52,7 +52,7 @@ $paymentId = null;
 	$request->setNote("My note");
 	$request->setNoRisk(true);
 	$request->setIsInvoice(false);
-	$request->setBuyerGovId('7895653737');
+	$request->setBuyerGovId('8429067910');
 	$request->setBuyerEmail('test@test.pl');
 
 	try
@@ -73,61 +73,61 @@ $paymentId = null;
 	println('<hr>');
 }
 
-// // Get payment current informations
-// {
-// 	println('<h1>getPayment</h1>');
+// Get payment current informations
+{
+	println('<h1>getPayment</h1>');
 
-// 	try
-// 	{	
-// 		$result = $client->getPayment($paymentId);
+	try
+	{	
+		$result = $client->getPayment($paymentId);
 		
-// 		printDump('<h2>Result</h2>', $result);
-// 	}
-// 	catch (Exception $ex)
-// 	{
-// 		printDump('<h2>Exception</h2>', $ex);
-// 	}
+		printDump('<h2>Result</h2>', $result);
+	}
+	catch (Exception $ex)
+	{
+		printDump('<h2>Exception</h2>', $ex);
+	}
 
-// 	println('<hr>');
-// }
+	println('<hr>');
+}
 
-// // Manage payment
-// {
-// 	println('<h1>managePayment</h1>');
+// Manage payment
+{
+	println('<h1>managePayment</h1>');
 
-// 	try
-// 	{	
-// 		$request = new PaymentManagementData();
-// 		$request->setPaymentId($paymentId);
-// 		$request->setDoConfirmDelivery(true);
+	try
+	{	
+		$request = new PaymentManagementData();
+		$request->setPaymentId($paymentId);
+		$request->setDoConfirmDelivery(true);
 
-// 		{
-// 			$conversionData = new OrderToInvoiceData();
-// 			$conversionData->setInvoiceDocumentNumber("TestInvoice/1/2/3/".uniqid());
-// 			$conversionData->setIssueDate(time() * 1000);
-// 			$conversionData->setDueDate((time() + 60 * 60 * 24 * 7) * 1000);
+		{
+			$conversionData = new OrderToInvoiceData();
+			$conversionData->setInvoiceDocumentNumber("TestInvoice/1/2/3/".uniqid());
+			$conversionData->setIssueDate(time() * 1000);
+			$conversionData->setDueDate((time() + 60 * 60 * 24 * 7) * 1000);
 
-// 			$request->setConversionData($conversionData);
-// 		}
+			$request->setConversionData($conversionData);
+		}
 
-// 		{
-// 			$document = new FileData();
-// 			$document->setFromFile(dirname(__FILE__).'/data/test.pdf');
+		{
+			$document = new FileData();
+			$document->setFromFile(dirname(__FILE__).'/data/test.pdf');
 
-// 			$request->setDocument($document);
-// 		}
+			$request->setDocument($document);
+		}
 
-// 		$result = $client->managePayment($request);
+		$result = $client->managePayment($request);
 		
-// 		printDump('<h2>Result</h2>', $result);
-// 	}
-// 	catch (Exception $ex)
-// 	{
-// 		printDump('<h2>Exception</h2>', $ex);
-// 	}
+		printDump('<h2>Result</h2>', $result);
+	}
+	catch (Exception $ex)
+	{
+		printDump('<h2>Exception</h2>', $ex);
+	}
 
-// 	println('<hr>');
-// }
+	println('<hr>');
+}
 
 
-// ?>
+?>

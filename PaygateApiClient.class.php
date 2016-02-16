@@ -35,6 +35,7 @@ require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentStartInfo.class.p
 require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentData.class.php");
 require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentCreationData.class.php");
 require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentManagementData.class.php");
+require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentStatusChangedInfo.class.php");
 
 class PaygateApiClient extends AbstractRestApiClient
 {
@@ -51,13 +52,17 @@ class PaygateApiClient extends AbstractRestApiClient
 	{
 		$output = null;
 
-		switch ($callbackDataFormat) {
-			case CallbackDataFormat::JSON: $output = $this->__mapArrayToObject(json_decode($callbackData, true), 'PaymentData', false); break;
-			case CallbackDataFormat::XML: $output = $this->__mapArrayToObject($this->__xmlToArray($callbackData), 'PaymentData', false); break;
-			default: break;
-		}
+		if ($this->__checkRequestHash($callbackData))
+		{
+			switch ($callbackDataFormat)
+			{
+				case CallbackDataFormat::JSON: $output = $this->__mapArrayToObject(json_decode($callbackData, true), 'PaymentStatusChangedInfo', false); break;
+				case CallbackDataFormat::XML: $output = $this->__mapArrayToObject($this->__xmlToArray($callbackData), 'PaymentStatusChangedInfo', false); break;
+				default: break;
+			}
 
-		return $output;
+			return $output;
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////
