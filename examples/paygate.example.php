@@ -45,8 +45,8 @@ $paymentId = null;
 	$request->setStatusUrl("http://your.server.com/payment/status");
 	$request->setStatusDataFormat(CallbackDataFormat::JSON);
 	$request->setDocumentNumber("No risk ąśłśł ustawiony ręcznie " . uniqid());
-	$request->setIssueDate('2016-02-01');
-	$request->setDueDate('2016-03-21');
+	$request->setIssueDate(date('Y-m-d', time()));
+	$request->setDueDate(date('Y-m-d', time() + (14 * 24 * 60 * 60)));
 	$request->setPriceGross(123.00);
 	$request->setCurrency("PLN");
 	$request->setNote("My note");
@@ -104,8 +104,8 @@ $paymentId = null;
 		{
 			$conversionData = new OrderToInvoiceData();
 			$conversionData->setInvoiceDocumentNumber("TestInvoice/1/2/3/".uniqid());
-			$conversionData->setIssueDate(time() * 1000);
-			$conversionData->setDueDate((time() + 60 * 60 * 24 * 7) * 1000);
+			$conversionData->setIssueDate(date('Y-m-d', time()));
+			$conversionData->setDueDate(date('Y-m-d', time() + (14 * 24 * 60 * 60)));
 
 			$request->setConversionData($conversionData);
 		}
