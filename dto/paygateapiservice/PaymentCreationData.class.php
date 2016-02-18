@@ -30,7 +30,7 @@
 *   DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/CallbackDataFormat.enum.php");
+require_once(dirname(__FILE__) ."/../CallbackDataFormat.enum.php");
 require_once(dirname(__FILE__) ."/../Contractor.class.php");
 
 class PaymentCreationData
