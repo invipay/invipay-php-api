@@ -55,7 +55,7 @@ abstract class BaseDocumentDetails extends BaseApiData
 
 	public function getContractor(){ return $this->contractor; }
 
-	public function setContractor(Contractor $contractor){ $this->contractor = $contractor; }
+	public function setContractor(Contractor $contractor = null){ $this->contractor = $contractor; }
 
 	public function getTotalGross(){ return $this->totalGross; }
 	public function setTotalGross($totalGross){ $this->totalGross = $totalGross; }
@@ -76,7 +76,7 @@ abstract class BaseDocumentDetails extends BaseApiData
 	public function setDueDate($dueDate){ $this->dueDate = $dueDate; }
 
 	public function getAttachment(){ return $this->attachment; }
-	public function setAttachment(DocumentAttachmentDownloadInfo $attachment){ $this->attachment = $attachment; }
+	public function setAttachment(DocumentAttachmentDownloadInfo $attachment = null){ $this->attachment = $attachment; }
 }
 
 ?>

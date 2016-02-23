@@ -54,7 +54,7 @@ class PaymentData extends BaseApiData
     public function setTransactionId($transactionId){ $this->transactionId = $transactionId; }
 
     public function getBuyer(){ return $this->buyer; }
-    public function setBuyer(Contractor $buyer){ $this->buyer = $buyer; }
+    public function setBuyer(Contractor $buyer = null){ $this->buyer = $buyer; }
 
     public function getTimeoutDate(){ return $this->timeoutDate; }
     public function setTimeoutDate($timeoutDate){ $this->timeoutDate = $timeoutDate; }

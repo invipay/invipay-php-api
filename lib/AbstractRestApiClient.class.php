@@ -74,6 +74,7 @@ abstract class AbstractRestApiClient
 			        );
 
 			$queryString = '';
+			$postBody = '';
 
 			if ($httpMethod == 'GET')
 			{
@@ -87,8 +88,6 @@ abstract class AbstractRestApiClient
 				if ($arguments != null)
 				{
 					$postBody = json_encode($this->__toArray($arguments));
-					$bodyHash = $this->__calculateBodyHash($postBody);
-					array_push($headers, AbstractRestApiClient::HEADER_SIGNATURE_KEY . ": " . $bodyHash);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $postBody);
 				}
 			}
@@ -96,6 +95,9 @@ abstract class AbstractRestApiClient
 			{
 				return null;
 			}
+
+			$bodyHash = $this->__calculateBodyHash($postBody, $queryString);
+			array_push($headers, AbstractRestApiClient::HEADER_SIGNATURE_KEY . ": " . $bodyHash);
 
 			$methodAddress .= $queryString;
 
@@ -115,7 +117,10 @@ abstract class AbstractRestApiClient
 			$header = trim(substr($response, 0, $header_size));
 			$body = trim(substr($response, $header_size));
 
-			$this->__checkResponseHash($header, $body);
+			if ($status == '200')
+			{
+				$this->__checkResponseHash($header, $body);
+			}
 
 			$output = $this->__createResponseObject($status, $body, $outputType, $outputIsArray);
 
@@ -180,9 +185,19 @@ abstract class AbstractRestApiClient
 		return true;
 	}
 
-	public function __calculateBodyHash($body)
+	public function __calculateBodyHash($body, $queryString = null)
 	{
-		$output = hash(AbstractRestApiClient::SIGNING_ALGORHITM_NAME, $body.$this->signatureKey);
+		if ($queryString !== null && strlen($queryString) > 0 && $queryString[0] == '?')
+		{
+			$queryString = substr($queryString, 1);
+		}
+		else
+		{
+			$queryString = '';
+		}
+
+		$toSign = $queryString.$body.$this->signatureKey;
+		$output = hash(AbstractRestApiClient::SIGNING_ALGORHITM_NAME, $toSign);
 		return $output;
 	}
 

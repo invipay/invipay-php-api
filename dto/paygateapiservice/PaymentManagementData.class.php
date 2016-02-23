@@ -44,10 +44,10 @@ class PaymentManagementData
 	public function setPaymentId($paymentId) { $this->paymentId = $paymentId; }
 
 	public function getConversionData() { return $this->conversionData; }
-	public function setConversionData(OrderToInvoiceData $conversionData) { $this->conversionData = $conversionData; }
+	public function setConversionData(OrderToInvoiceData $conversionData = null) { $this->conversionData = $conversionData; }
 
 	public function getDocument() { return $this->document; }
-	public function setDocument(FileData $document) { $this->document = $document; }
+	public function setDocument(FileData $document = null) { $this->document = $document; }
 
 	public function getDoConfirmDelivery() { return $this->doConfirmDelivery; }
 	public function setDoConfirmDelivery($doConfirmDelivery) { $this->doConfirmDelivery = $doConfirmDelivery; }

@@ -38,7 +38,7 @@ class OrderData extends BaseTransactionData
 	protected $document;
 
 	public function getDocument(){ return $this->document; }
-	public function setDocument(FileData $document){ $this->document = $document; }
+	public function setDocument(FileData $document = null){ $this->document = $document; }
 }
 
 ?>

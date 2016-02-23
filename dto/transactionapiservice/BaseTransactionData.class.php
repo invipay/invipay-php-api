@@ -55,7 +55,7 @@ abstract class BaseTransactionData
 	public function setCurrency($currency){ $this->currency = $currency; }
 
 	public function getContractor(){ return $this->contractor; }
-	public function setContractor(Contractor $contractor){ $this->contractor = $contractor; }
+	public function setContractor(Contractor $contractor = null){ $this->contractor = $contractor; }
 	
 	public function getNote(){ return $this->note; }
 	public function setNote($note){ $this->note = $note; }

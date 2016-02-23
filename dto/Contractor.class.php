@@ -67,10 +67,10 @@ class Contractor
 	public function setWWW($WWW){ $this->WWW = $WWW; }
 
 	public function getAccount(){ return $this->account; }
-	public function setAccount(BankAccount $account){ $this->account = $account; }
+	public function setAccount(BankAccount $account = null){ $this->account = $account; }
 
 	public function getAddress(){ return $this->address; }
-	public function setAddress(AddressData $address){ $this->address = $address; }
+	public function setAddress(AddressData $address = null){ $this->address = $address; }
 }
 
 ?>

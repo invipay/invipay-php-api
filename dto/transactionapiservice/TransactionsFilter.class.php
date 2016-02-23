@@ -42,7 +42,7 @@ class TransactionsFilter
 	protected $contractorCompanyGovId = null;
 
 	public function getType() { return $this->type; }
-	public function setType(TransactionType $type){ $this->type = $type; }
+	public function setType($type){ $this->type = $type; }
 
 	public function getSide() { return $this->side; }
 	public function setSide($side){ $this->side = $side; }
