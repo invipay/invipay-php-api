@@ -42,7 +42,7 @@ class ReportsApiClient extends AbstractRestApiClient
 
 	public function getAccountantReport(ReportFilter $filter)
 	{
-		return $this->__call_ws_action('/accountant', $filter, 'POST', 'AccountantReportDocument');
+		return $this->__call_ws_action('/accountant', null, $filter, 'POST', 'AccountantReportDocument');
 	}
 }
 

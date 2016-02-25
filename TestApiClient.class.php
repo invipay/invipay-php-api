@@ -42,17 +42,17 @@ class TestApiClient extends AbstractRestApiClient
 
 	public function getDate()
 	{
-		return $this->__call_ws_action('/getDate', null, 'GET', null);
+		return $this->__call_ws_action('/getDate', null, null, 'GET', null);
 	}
 
 	public function echoMessage(EchoIn $request)
 	{
-		return $this->__call_ws_action('/echoMessage', $request, 'POST', 'EchoOut');
+		return $this->__call_ws_action('/echoMessage', null, $request, 'POST', 'EchoOut');
 	}
 
 	public function whoAmI()
 	{
-		return $this->__call_ws_action('/whoAmI', null, 'GET', null);
+		return $this->__call_ws_action('/whoAmI', null, null, 'GET', null);
 	}
 }
 

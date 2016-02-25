@@ -90,7 +90,7 @@ $paymentId = null;
 
 	println('<hr>');
 }
-
+die();
 // Manage payment
 {
 	println('<h1>managePayment</h1>');

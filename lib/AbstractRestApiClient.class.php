@@ -59,7 +59,7 @@ abstract class AbstractRestApiClient
 		$this->signatureKey = $signatureKey;
 	}
 
-	public function __call_ws_action($actionPath, $arguments, $httpMethod, $outputType, $outputIsArray = false)
+	public function __call_ws_action($actionPath, $query, $body, $httpMethod, $outputType, $outputIsArray = false, $disableOutputSignatureCheck = false)
 	{
 			$ch = curl_init();
 
@@ -76,18 +76,19 @@ abstract class AbstractRestApiClient
 			$queryString = '';
 			$postBody = '';
 
+			$this->__appendToQueryString($queryString, $query !== null ? http_build_query($query) : null);
+
 			if ($httpMethod == 'GET')
 			{
 				curl_setopt($ch, CURLOPT_HTTPGET, true);
-				$this->__appendToQueryString($queryString, $arguments !== null ? http_build_query($arguments) : null);
 			}
 			else if ($httpMethod == 'POST')
 			{
 				curl_setopt($ch, CURLOPT_POST, true);
 				
-				if ($arguments != null)
+				if ($body != null)
 				{
-					$postBody = json_encode($this->__toArray($arguments));
+					$postBody = json_encode($this->__toArray($body));
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $postBody);
 				}
 			}
@@ -117,16 +118,12 @@ abstract class AbstractRestApiClient
 			$header = trim(substr($response, 0, $header_size));
 			$body = trim(substr($response, $header_size));
 
-			if ($status == '200')
+			if ($status == '200' && !$disableOutputSignatureCheck)
 			{
 				$this->__checkResponseHash($header, $body);
 			}
 
 			$output = $this->__createResponseObject($status, $body, $outputType, $outputIsArray);
-
-			if (is_subclass_of($output, 'ApiOperationException') == false) {
-				$this->__checkResponseHash($header, $body);
-			}
 
 			return $output;
 	}
@@ -214,8 +211,19 @@ abstract class AbstractRestApiClient
 	{
 		if ($status == '200')
 		{
-			$data = json_decode($response, true);
-			return $data === null ? $response : $this->__mapArrayToObject($data, $outputType, $outputIsArray);
+			if ($outputType === null)
+			{
+				return $response;
+			}
+			else if (is_callable($outputType))
+			{
+				return call_user_func($outputType, $response);
+			}
+			else
+			{
+				$data = json_decode($response, true);
+				return $data === null ? $response : $this->__mapArrayToObject($data, $outputType, $outputIsArray);
+			}
 		}
 		else if ($status == '204'){ return null; }
 		else

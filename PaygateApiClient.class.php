@@ -69,17 +69,17 @@ class PaygateApiClient extends AbstractRestApiClient
 
 	public function createPayment(PaymentCreationData $paymentData)
 	{
-		return $this->__call_ws_action('/create', $paymentData, 'POST', 'PaymentStartInfo');
+		return $this->__call_ws_action('/create', null, $paymentData, 'POST', 'PaymentStartInfo');
 	}
 
 	public function getPayment($id)
 	{
-		return $this->__call_ws_action('/details', array('id' => $id), 'GET', 'PaymentData');
+		return $this->__call_ws_action('/details', array('id' => $id), null, 'GET', 'PaymentData');
 	}
 
 	public function managePayment(PaymentManagementData $managementData)
 	{
-		return $this->__call_ws_action('/manage', $managementData, 'POST', 'PaymentData');
+		return $this->__call_ws_action('/manage', null, $managementData, 'POST', 'PaymentData');
 	}
 }
 

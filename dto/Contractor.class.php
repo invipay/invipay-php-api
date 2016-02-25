@@ -41,7 +41,7 @@ class Contractor
 	protected $email;
 	protected $fax;
 	protected $phone;
-	protected $WWW;
+	protected $www;
 	protected $account;
 	protected $address;
 
@@ -63,8 +63,8 @@ class Contractor
 	public function getPhone(){ return $this->phone; }
 	public function setPhone($phone){ $this->phone = $phone; }
 
-	public function getWWW(){ return $this->WWW; }
-	public function setWWW($WWW){ $this->WWW = $WWW; }
+	public function getWww(){ return $this->www; }
+	public function setWww($www){ $this->www = $www; }
 
 	public function getAccount(){ return $this->account; }
 	public function setAccount(BankAccount $account = null){ $this->account = $account; }

@@ -51,7 +51,7 @@ class TransactionDetails extends BaseDocumentDetails
 	public function setType($type){ $this->type = $type; }
 
 	public function getItems(){ return $this->items; }
-	public function setItems(array $items, TransactionItemDetails $itemTypeHint = null){ $this->items = $items; }
+	public function setItems(array $items = null, TransactionItemDetails $itemTypeHint = null){ $this->items = $items; }
 }
 
 ?>

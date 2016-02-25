@@ -44,51 +44,51 @@ class LiabilitiesApiClient extends AbstractRestApiClient
 
 	public function getCommissionInvoice($id)
 	{
-		return $this->__call_ws_action('/ci/details', array('id' => $id), 'GET', 'CommissionInvoiceDetails');
+		return $this->__call_ws_action('/ci/details', array('id' => $id), null, 'GET', 'CommissionInvoiceDetails');
 	}
 
 	public function listCommissionInvoices(ListFilter $filter)
 	{
-		return $this->__call_ws_action('/ci/list', $filter, 'POST', 'CommissionInvoiceDetails', true);
+		return $this->__call_ws_action('/ci/list', null, $filter, 'POST', 'CommissionInvoiceDetails', true);
 	}
 
 	public function downloadCommissionInvoiceDocument($id)
 	{
-		return $this->__call_ws_action('/ci/document', array('id' => $id), 'GET', function($str){ return base64_decode($str); });
+		return $this->__call_ws_action('/ci/document', array('id' => $id), null, 'GET', function($str){ return base64_decode($str); });
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
 	public function getInterestInvoice($id)
 	{
-		return $this->__call_ws_action('/ii/details', array('id' => $id), 'GET', 'InterestInvoiceDetails');
+		return $this->__call_ws_action('/ii/details', array('id' => $id), null, 'GET', 'InterestInvoiceDetails');
 	}
 
 	public function listInterestInvoices(ListFilter $filter)
 	{
-		return $this->__call_ws_action('/ii/list', $filter, 'POST', 'InterestInvoiceDetails', true);
+		return $this->__call_ws_action('/ii/list', null, $filter, 'POST', 'InterestInvoiceDetails', true);
 	}
 
 	public function downloadInterestInvoiceDocument($id)
 	{
-		return $this->__call_ws_action('/ii/document', array('id' => $id), 'GET', function($str){ return base64_decode($str); });
+		return $this->__call_ws_action('/ii/document', array('id' => $id), null, 'GET', function($str){ return base64_decode($str); });
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
 	public function getInterestNote($id)
 	{
-		return $this->__call_ws_action('/in/details', array('id' => $id), 'GET', 'InterestNoteDetails');
+		return $this->__call_ws_action('/in/details', array('id' => $id), null, 'GET', 'InterestNoteDetails');
 	}
 
 	public function listInterestNotes(ListFilter $filter)
 	{
-		return $this->__call_ws_action('/in/list', $filter, 'POST', 'InterestNoteDetails', true);
+		return $this->__call_ws_action('/in/list', null, $filter, 'POST', 'InterestNoteDetails', true);
 	}
 
 	public function downloadInterestNoteDocument($id)
 	{
-		return $this->__call_ws_action('/in/document', array('id' => $id), 'GET', function($str){ return base64_decode($str); });
+		return $this->__call_ws_action('/in/document', array('id' => $id), null, 'GET', function($str){ return base64_decode($str); });
 	}
 }
 

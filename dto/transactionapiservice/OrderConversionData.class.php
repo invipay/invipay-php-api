@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
+* 	@version 1.0.5
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,28 +30,19 @@
 *	DAMAGE.
 */
 
+require_once(dirname(__FILE__) ."/OrderToInvoiceData.class.php");
 require_once(dirname(__FILE__) ."/../FileData.class.php");
-require_once(dirname(__FILE__) ."/../transactionapiservice/OrderToInvoiceData.class.php");
 
-class PaymentManagementData
+class OrderConversionData extends OrderToInvoiceData
 {
-	protected $paymentId;
-	protected $conversionData;
-	protected $document;
-	protected $doConfirmDelivery;
+	protected $transactionId;
+	protected $invoiceDocument;
 
-	public function getPaymentId() { return $this->paymentId; }
-	public function setPaymentId($paymentId) { $this->paymentId = $paymentId; }
+	public function getTransactionId(){ return $this->transactionId; }
+	public function setTransactionId($transactionId){ $this->transactionId = $transactionId; }
 
-	public function getConversionData() { return $this->conversionData; }
-	public function setConversionData(OrderToInvoiceData $conversionData = null) { $this->conversionData = $conversionData; }
-
-	public function getDocument() { return $this->document; }
-	public function setDocument(FileData $document = null) { $this->document = $document; }
-
-	public function getDoConfirmDelivery() { return $this->doConfirmDelivery; }
-	public function setDoConfirmDelivery($doConfirmDelivery) { $this->doConfirmDelivery = $doConfirmDelivery; }
-
+	public function getInvoiceDocument(){ return $this->invoiceDocument; }
+	public function setInvoiceDocument(FileData $invoiceDocument = null){ $this->invoiceDocument = $invoiceDocument; }
 }
 
 ?>

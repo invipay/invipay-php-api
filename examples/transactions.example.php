@@ -35,62 +35,64 @@ $api_config = getConfig();
 $client = new TransactionsApiClient($api_config['url'], $api_config['apiKey'], $api_config['signatureKey']);
 
 // createInvoice
-{
-	println('<h1>createInvoice</h1>');
+// {
+// 	println('<h1>createInvoice</h1>');
 
-	try
-	{	
-		$request = new InvoiceData();
-		$request->setDocumentNumber('Test/'.uniqid());
-		$request->setIssueDate(time() * 1000); // Note that you must provide date in miliseconds, not seconds
-		$request->setDueDate($request->getIssueDate() + (7 * 24 * 60 * 60 * 1000)); // Due date == issue date + 7 days
-		$request->setPriceGross(123);
-		$request->setCurrency('PLN');
-		$request->setNote('Test transaction from API');
-		$request->setNoRisk(true);
+// 	try
+// 	{	
+// 		$request = new InvoiceData();
+// 		$request->setDocumentNumber('Test/'.uniqid());
+// 		$request->setIssueDate(date('Y-m-d', time()));
+// 		$request->setDueDate(date('Y-m-d', time() + (7 * 24 * 60 * 60))); // Due date == issue date + 7 days
+// 		$request->setPriceGross(123);
+// 		$request->setCurrency('PLN');
+// 		$request->setNote('Test transaction from API');
+// 		$request->setNoRisk(true);
 
-		$contractor = new Contractor();
-		$contractor->setName('Test contractor '.uniqid());
-		$contractor->setTaxPayerNumber('5252553735');
-		$contractor->setCompanyGovId('146665640');
-		$contractor->setEmail('test@invipay.com');
-		$contractor->setFax('12312123');
-		$contractor->setPhone('234234234');
-		$contractor->setWWW('www.esr24.pl');
+// 		$contractor = new Contractor();
+// 		$contractor->setName('Test contractor '.uniqid());
+// 		$contractor->setTaxPayerNumber('8429067910');
+// 		$contractor->setCompanyGovId('146665640');
+// 		$contractor->setEmail('test@invipay.com');
+// 		$contractor->setFax('12312123');
+// 		$contractor->setPhone('234234234');
+// 		$contractor->setWww('www.esr24.pl');
 
-		$contractorAccount = new BankAccount();
-		$contractorAccount->setBankName('Test bank');
-		$contractorAccount->setNumber('PL123123123123123123123');
+// 		$contractorAccount = new BankAccount();
+// 		$contractorAccount->setBankName('Test bank');
+// 		$contractorAccount->setNumber('PL123123123123123123123');
 
-		$contractor->setAccount($contractorAccount);
+// 		$contractor->setAccount($contractorAccount);
 
-		$contractorAddress = new AddressData();
-		$contractorAddress->setStreet('Test street 1/2');
-		$contractorAddress->setCity('Testville');
-		$contractorAddress->setPostCode('00-111');
-		$contractorAddress->setCountryCode('PL');
+// 		$contractorAddress = new AddressData();
+// 		$contractorAddress->setStreet('Test street 1/2');
+// 		$contractorAddress->setCity('Testville');
+// 		$contractorAddress->setPostCode('00-111');
+// 		$contractorAddress->setCountryCode('PL');
 
-		$contractor->setAddress($contractorAddress);
+// 		$contractor->setAddress($contractorAddress);
 
-		$request->setContractor($contractor);
+// 		$request->setContractor($contractor);
 
-		$pdf = new FileData();
-		$pdf->setFromFile(dirname(__FILE__).'/data/test.pdf');
+// 		$pdf = new FileData();
+// 		$pdf->setFromFile(dirname(__FILE__).'/data/test.pdf');
 
-		$request->setDocument($pdf);
+// 		$request->setDocument($pdf);
 
-		$result = $client->createInvoice($request);
+// 		$result = $client->createInvoice($request);
 		
-		printDump('<h2>Request</h2>', $request);
-		printDump('<h2>Result</h2>', $result);
-	}
-	catch (Exception $ex)
-	{
-		printDump('<h2>Exception</h2>', $ex);
-	}
+// 		printDump('<h2>Request</h2>', $request);
+// 		printDump('<h2>Result</h2>', $result);
+// 	}
+// 	catch (Exception $ex)
+// 	{
+// 		printDump('<h2>Exception</h2>', $ex);
+// 	}
 
-	println('<hr>');
-}
+// 	println('<hr>');
+// }
+
+$createdOrderId = null;
 
 // createOrder
 {
@@ -100,7 +102,7 @@ $client = new TransactionsApiClient($api_config['url'], $api_config['apiKey'], $
 	{	
 		$request = new OrderData();
 		$request->setDocumentNumber('Test/'.uniqid());
-		$request->setIssueDate(time() * 1000); // Note that you must provide date in miliseconds, not seconds
+		$request->setIssueDate(date('Y-m-d', time()));
 		$request->setPriceGross(123);
 		$request->setCurrency('PLN');
 		$request->setNote('Test transaction from API');
@@ -108,12 +110,12 @@ $client = new TransactionsApiClient($api_config['url'], $api_config['apiKey'], $
 
 		$contractor = new Contractor();
 		$contractor->setName('Test contractor '.uniqid());
-		$contractor->setTaxPayerNumber('9379535461');
-		$contractor->setCompanyGovId('157381055');
+		$contractor->setTaxPayerNumber('8429067910');
+		//$contractor->setCompanyGovId('146665640');
 		$contractor->setEmail('test@esr24.pl');
 		$contractor->setFax('12312123');
 		$contractor->setPhone('234234234');
-		$contractor->setWWW('www.esr24.pl');
+		$contractor->setWww('www.esr24.pl');
 
 		$contractorAccount = new BankAccount();
 		$contractorAccount->setBankName('Test bank');
@@ -137,6 +139,8 @@ $client = new TransactionsApiClient($api_config['url'], $api_config['apiKey'], $
 		$request->setDocument($pdf);
 
 		$result = $client->createOrder($request);
+
+		$createdOrderId = $result->getId();
 		
 		printDump('<h2>Request</h2>', $request);
 		printDump('<h2>Result</h2>', $result);
@@ -216,6 +220,57 @@ $randomItemAttachmentId = null;
 		else
 		{
 			printDump('<h2>Result</h2>', null);
+		}
+	}
+	catch (Exception $ex)
+	{
+		printDump('<h2>Exception</h2>', $ex);
+	}
+
+	println('<hr>');
+}
+
+// Convert to invoice
+{
+	println('<h1>convertOrderToInvoice</h1>');	
+
+	try
+	{
+		if ($createdOrderId !== null)
+		{
+			$pdf = new FileData();
+			$pdf->setFromFile(dirname(__FILE__).'/data/test.pdf');
+
+			$data = new OrderConversionData();
+			$data->setTransactionId($createdOrderId);
+			$data->setInvoiceDocumentNumber("FINAL INVOICE");
+			$data->setIssueDate(date('Y-m-d', time()));
+			$data->setDueDate(date('Y-m-d', time() + (30 * 24 * 60 * 60)));
+			$data->setInvoiceDocument($pdf);
+			$result = $client->convertOrderToInvoice($data);
+
+			printDump('<h2>Result</h2>', $result);
+		}
+	}
+	catch (Exception $ex)
+	{
+		printDump('<h2>Exception</h2>', $ex);
+	}
+
+	println('<hr>');
+}
+
+// Confirm delivery
+{
+	println('<h1>confirmDelivery</h1>');
+
+	try
+	{
+		if ($createdOrderId !== null)
+		{
+			$result = $client->confirmDelivery($createdOrderId);
+
+			printDump('<h2>Result</h2>', $result);
 		}
 	}
 	catch (Exception $ex)

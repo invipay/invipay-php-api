@@ -33,6 +33,7 @@
 require_once(dirname(__FILE__) ."/lib/AbstractRestApiClient.class.php");
 require_once(dirname(__FILE__) ."/dto/transactionapiservice/InvoiceData.class.php");
 require_once(dirname(__FILE__) ."/dto/transactionapiservice/OrderData.class.php");
+require_once(dirname(__FILE__) ."/dto/transactionapiservice/OrderConversionData.class.php");
 require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionDetails.class.php");
 require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionItemDetails.class.php");
 require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionsFilter.class.php");
@@ -48,32 +49,47 @@ class TransactionsApiClient extends AbstractRestApiClient
 
 	public function createInvoice(InvoiceData $data)
 	{
-		return $this->__call_ws_action('/createInvoice', $data, 'POST', 'TransactionDetails');
+		return $this->__call_ws_action('/createInvoice', null, $data, 'POST', 'TransactionDetails');
 	}
 
 	public function createOrder(OrderData $data)
 	{
-		return $this->__call_ws_action('/createOrder', $data, 'POST', 'TransactionDetails');
+		return $this->__call_ws_action('/createOrder', null, $data, 'POST', 'TransactionDetails');
 	}
 
 	public function getTransaction($id)
 	{
-		return $this->__call_ws_action('/details', array('id' => $id), 'GET', 'TransactionDetails');
+		return $this->__call_ws_action('/details', array('id' => $id), null, 'GET', 'TransactionDetails');
 	}
 
 	public function listTransactions(TransactionsFilter $filter)
 	{
-		return $this->__call_ws_action('/list', $filter, 'POST', 'TransactionDetails', true);
+		return $this->__call_ws_action('/list', null, $filter, 'POST', 'TransactionDetails', true);
 	}
 
 	public function getDocumentInfo($id)
 	{
-		return $this->__call_ws_action('/document_info', array('id' => $id), 'GET', 'FileInfo');
+		return $this->__call_ws_action('/document_info', array('id' => $id), null, 'GET', 'FileInfo');
 	}
 
 	public function downloadDocument($id)
 	{
-		return $this->__call_ws_action('/document', array('id' => $id), 'GET', function($str){ return base64_decode($str); });
+		return $this->__call_ws_action('/document', array('id' => $id), null, 'GET', null, false, true);
+	}
+
+	public function confirmDelivery($id)
+	{
+		return $this->__call_ws_action('/confirm_delivery', array('id' => $id), null, 'GET', 'TransactionDetails');
+	}
+
+	public function convertOrderToInvoice(OrderConversionData $data)
+	{
+		return $this->__call_ws_action('/convert', null, $data, 'POST', 'TransactionDetails');
+	}
+
+	public function attachDocument($id, FileData $document)
+	{
+		return $this->__call_ws_action('/document_attach', array('id' => $id), $document, 'POST', 'TransactionDetails');
 	}
 }
 
