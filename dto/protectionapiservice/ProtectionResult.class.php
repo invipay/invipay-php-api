@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
+* 	@version 1.0.5
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,42 +30,34 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/../Contractor.class.php");
+require_once(dirname(__FILE__) ."/ProtectionStatus.enum.php");
 
-abstract class BaseTransactionData
+class ProtectionResult
 {
-	protected $exId;
 	protected $documentNumber;
-	protected $issueDate;
 	protected $priceGross;
-	protected $currency = "PLN";
-	protected $contractor;
-	protected $note;
-	protected $noRisk = null;
-
-	public function getExId(){ return $this->exId; }
-	public function setExId($exId){ $this->exId = $exId; }
+	protected $exId;
+	protected $id;
+	protected $status;
+	protected $message;
 
 	public function getDocumentNumber(){ return $this->documentNumber; }
 	public function setDocumentNumber($documentNumber){ $this->documentNumber = $documentNumber; }
 
-	public function getIssueDate(){ return $this->issueDate; }
-	public function setIssueDate($issueDate){ $this->issueDate = $issueDate; }
-
 	public function getPriceGross(){ return $this->priceGross; }
 	public function setPriceGross($priceGross){ $this->priceGross = $priceGross; }
 
-	public function getCurrency(){ return $this->currency; }
-	public function setCurrency($currency){ $this->currency = $currency; }
+	public function getExId(){ return $this->exId; }
+	public function setExId($exId){ $this->exId = $exId; }
 
-	public function getContractor(){ return $this->contractor; }
-	public function setContractor(Contractor $contractor = null){ $this->contractor = $contractor; }
-	
-	public function getNote(){ return $this->note; }
-	public function setNote($note){ $this->note = $note; }
+	public function getId(){ return $this->id; }
+	public function setId($id){ $this->id = $id; }
 
-	public function getNoRisk(){ return $this->noRisk; }
-	public function setNoRisk($noRisk){ $this->noRisk = $noRisk; }
+	public function getStatus(){ return $this->status; }
+	public function setStatus($status){ $this->status = $status; }
+
+	public function getMessage(){ return $this->message; }
+	public function setMessage($message){ $this->message = $message; }
 }
 
 ?>

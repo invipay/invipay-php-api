@@ -88,7 +88,18 @@ abstract class AbstractRestApiClient
 				
 				if ($body != null)
 				{
-					$postBody = json_encode($this->__toArray($body));
+					$bodyData = array();
+
+					if (!is_array($body)){ $bodyData = $this->__toArray($body); }
+					else
+					{
+						foreach ($body as $key => $value)
+						{
+							$bodyData[$key] = $this->__toArray($value);
+						}
+					}
+
+					$postBody = json_encode($bodyData);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $postBody);
 				}
 			}
