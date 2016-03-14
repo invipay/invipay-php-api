@@ -37,7 +37,7 @@ class ProtectionResult
 	protected $documentNumber;
 	protected $priceGross;
 	protected $exId;
-	protected $id;
+	protected $transactionId;
 	protected $status;
 	protected $message;
 
@@ -50,8 +50,8 @@ class ProtectionResult
 	public function getExId(){ return $this->exId; }
 	public function setExId($exId){ $this->exId = $exId; }
 
-	public function getId(){ return $this->id; }
-	public function setId($id){ $this->id = $id; }
+	public function getTransactionId(){ return $this->transactionId; }
+	public function setTransactionId($transactionId){ $this->transactionId = $transactionId; }
 
 	public function getStatus(){ return $this->status; }
 	public function setStatus($status){ $this->status = $status; }

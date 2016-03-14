@@ -56,8 +56,8 @@ $operationId = null;
 		$data = new CommonTransactionData();
 		$data->setExId('TRANSACTION/1');
 		$data->setDocumentNumber(1);
-		$data->setIssueDate('2016-02-18');
-		$data->setDueDate('2016-03-01');
+		$data->setIssueDate(date('Y-m-d', time()));
+		$data->setDueDate(date('Y-m-d', time() + (24 * 60 * 60 * 7)));
 		$data->setPriceGross(101);
 		$data->setContractor($contractor);
 		$data->setDocument($document);
@@ -78,8 +78,8 @@ $operationId = null;
 		$data = new CommonTransactionData();
 		$data->setExId('TRANSACTION/2');
 		$data->setDocumentNumber(2);
-		$data->setIssueDate('2016-02-18');
-		$data->setDueDate('2016-03-01');
+		$data->setIssueDate(date('Y-m-d', time()));
+		$data->setDueDate(date('Y-m-d', time() + (24 * 60 * 60 * 7)));
 		$data->setPriceGross(102);
 		$data->setContractor($contractor);
 		$data->setDocument($document);
@@ -105,7 +105,7 @@ $operationId = null;
 	println('<hr>');
 }
 
-sleep(30); // WARNING: DON'T DO THIS IN PRODUCTION ENVIRONMENT! YOUR PHP THREAD WILL PROBABLY TIMEOUT!
+//sleep(30); // WARNING: DON'T DO THIS IN PRODUCTION ENVIRONMENT! YOUR PHP THREAD WILL PROBABLY TIMEOUT!
 
 // Check result
 {
