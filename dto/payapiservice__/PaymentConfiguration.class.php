@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
+* 	@version 1.0.5
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,14 +30,14 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/ApiOperationException.class.php");
+require_once(dirname(__FILE__) ."/BuyerEmployee.class.php");
 
-class ObjectNotFoundException extends ApiOperationException
+class PaymentConfiguration
 {
-	public function __construct($message = null, $data = array())
-	{
-		parent::__construct('ObjectNotFoundException', $message, $data);
-	}
+	protected $employees = array();
+
+	public function getEmployees(){ return $this->employees; }
+	public function setEmployees(array $employees = null, BuyerEmployee $itemTypeHint = null){ $this->employees = $employees; }
 }
 
 ?>

@@ -37,6 +37,8 @@ require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentCreationData.clas
 require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentManagementData.class.php");
 require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentStatusChangedInfo.class.php");
 
+require_once(dirname(__FILE__) ."/exceptions/paygateapiservice/TransactionContractorException.class.php");
+
 class PaygateApiClient extends AbstractRestApiClient
 {
 	protected function getServiceAddress(){ return '/paygate'; }

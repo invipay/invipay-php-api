@@ -5,9 +5,6 @@
 *	
 *	http://www.invipay.com
 *
-*	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
-*
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
 *	conditions are met: Redistributions of source code must retain the
@@ -30,14 +27,12 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/ApiOperationException.class.php");
-
-class ObjectNotFoundException extends ApiOperationException
-{
-	public function __construct($message = null, $data = array())
-	{
-		parent::__construct('ObjectNotFoundException', $message, $data);
-	}
-}
-
-?>
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+						
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+						
+header("Location: ../");
+exit;

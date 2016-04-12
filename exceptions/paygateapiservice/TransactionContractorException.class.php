@@ -30,13 +30,13 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/ApiOperationException.class.php");
+require_once(dirname(__FILE__) ."/../ApiOperationException.class.php");
 
-class ObjectNotFoundException extends ApiOperationException
+class TransactionContractorException extends ApiOperationException
 {
 	public function __construct($message = null, $data = array())
 	{
-		parent::__construct('ObjectNotFoundException', $message, $data);
+		parent::__construct('TransactionContractorException', $message, $data);
 	}
 }
 

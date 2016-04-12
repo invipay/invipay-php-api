@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
+* 	@version 1.0.5
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,14 +30,20 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/ApiOperationException.class.php");
+require_once(dirname(__FILE__) ."/../ApiOperationException.class.php");
 
-class ObjectNotFoundException extends ApiOperationException
+class CallbackReceivedException extends Exception
 {
-	public function __construct($message = null, $data = array())
+	protected $paymentId;
+
+	public function __construct($paymentId, ApiOperationException $originalException)
 	{
-		parent::__construct('ObjectNotFoundException', $message, $data);
+		parent::__construct("Exception received by callback. See inner exception for details.", 0, $originalException);
+		$this->setPaymentId($paymentId);
 	}
+
+	public function getPaymentId(){ return $this->paymentId; }
+	private function setPaymentId($paymentId){ $this->paymentId = $paymentId; }
 }
 
 ?>

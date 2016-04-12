@@ -30,7 +30,7 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/../exceptions/ApiOperationException.class.php");
+require_once(dirname(__FILE__) ."/ApiOperationException.class.php");
 
 class AuthenticationException extends ApiOperationException
 {

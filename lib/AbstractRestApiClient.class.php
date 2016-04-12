@@ -35,7 +35,6 @@ require_once(dirname(__FILE__) ."/../exceptions/AccessFromIpDeniedException.clas
 require_once(dirname(__FILE__) ."/../exceptions/AuthenticationException.class.php");
 require_once(dirname(__FILE__) ."/../exceptions/SignatureException.class.php");
 require_once(dirname(__FILE__) ."/../exceptions/ValidationException.class.php");
-require_once(dirname(__FILE__) ."/../exceptions/TransactionContractorException.class.php");
 require_once(dirname(__FILE__) ."/../exceptions/ObjectNotFoundException.class.php");
 
 abstract class AbstractRestApiClient
@@ -48,7 +47,7 @@ abstract class AbstractRestApiClient
 	protected $apiKey;
 	protected $signatureKey;
 
-	private $knownExceptions = array('AccessFromIpDeniedException', 'AuthenticationException', 'SignatureException', 'ValidationException', 'TransactionContractorException', 'ObjectNotFoundException');
+	//private $knownExceptions = array('AccessFromIpDeniedException', 'AuthenticationException', 'SignatureException', 'ValidationException', 'TransactionContractorException', 'ObjectNotFoundException');
 	
 	abstract protected function getServiceAddress();
 
@@ -59,14 +58,14 @@ abstract class AbstractRestApiClient
 		$this->signatureKey = $signatureKey;
 	}
 
-	public function __call_ws_action($actionPath, $query, $body, $httpMethod, $outputType, $outputIsArray = false, $disableOutputSignatureCheck = false)
+	public function __call_ws_action($actionPath, $query, $body, $httpMethod, $outputType, $outputIsArray = false, $disableOutputSignatureCheck = false, $bodyContentType = "application/json;charset=\"utf-8\"")
 	{
 			$ch = curl_init();
 
 			$methodAddress = $this->baseUrl.$this->getServiceAddress().$actionPath;
 
 			$headers = array( 
-			            "Content-type: application/json;charset=\"utf-8\"", 
+			            "Content-type: " . $bodyContentType, 
 			            "Accept: application/json,application/octet-stream", 
 			            "Cache-Control: no-cache", 
 			            "Pragma: no-cache",
@@ -75,7 +74,7 @@ abstract class AbstractRestApiClient
 
 			$queryString = '';
 			$postBody = '';
-
+			
 			$this->__appendToQueryString($queryString, $query !== null ? http_build_query($query) : null);
 
 			if ($httpMethod == 'GET')
@@ -90,16 +89,28 @@ abstract class AbstractRestApiClient
 				{
 					$bodyData = array();
 
-					if (!is_array($body)){ $bodyData = $this->__toArray($body); }
+					if ($bodyContentType == 'text/plain')
+					{
+						$postBody = $body;
+					}
 					else
 					{
-						foreach ($body as $key => $value)
+						if (is_object($body)){ $bodyData = $this->__toArray($body); }
+						else if (is_array($body))
 						{
-							$bodyData[$key] = $this->__toArray($value);
+							foreach ($body as $key => $value)
+							{
+								$bodyData[$key] = $this->__toArray($value);
+							}
 						}
+						else
+						{
+							$bodyData = $body;
+						}
+
+						$postBody = json_encode($bodyData);
 					}
 
-					$postBody = json_encode($bodyData);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $postBody);
 				}
 			}
@@ -112,6 +123,8 @@ abstract class AbstractRestApiClient
 			array_push($headers, AbstractRestApiClient::HEADER_SIGNATURE_KEY . ": " . $bodyHash);
 
 			$methodAddress .= $queryString;
+
+			echo "-----\r\n".$methodAddress."\r\n".$postBody."\r\n-----\r\n";
 
 			curl_setopt($ch, CURLOPT_URL, $methodAddress);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -239,6 +252,8 @@ abstract class AbstractRestApiClient
 		else if ($status == '204'){ return null; }
 		else
 		{
+			echo $response;
+
 			$data = json_decode($response, true);
 			if ($data !== null && is_array($data) && array_key_exists('error', $data) && $data['error'] == true)
 			{
@@ -246,13 +261,13 @@ abstract class AbstractRestApiClient
 				$errorMessage = array_key_exists('message', $data) ? $data['message'] : null;
 				$errorData = array_key_exists('data', $data) ? $data['data'] : null;
 				
-				if (in_array($errorType, $this->knownExceptions))
+				if (class_exists($errorType, false))
 				{
 					throw new $errorType($errorMessage, $errorData);
 				}
 				else
 				{
-					throw new ApiOperationException($errorType, $errorMessage, $errorData);
+					throw new ApiOperationException($errorType, $errorType.': '.$errorMessage, $errorData);
 					
 				}
 			}
@@ -339,32 +354,40 @@ abstract class AbstractRestApiClient
 
 	protected function __toArray($object)
 	{
-		$output = array();
-
-		$rclass = new ReflectionClass($object);
-
-		foreach ($rclass->getMethods(ReflectionMethod::IS_PUBLIC) as $rmethod)
+		if (is_array($object)){ return $object; }
+		else if (is_object($object))
 		{
-			if ($rmethod !== null)
+			$output = array();
+
+			$rclass = new ReflectionClass($object);
+
+			foreach ($rclass->getMethods(ReflectionMethod::IS_PUBLIC) as $rmethod)
 			{
-				$propertyName = $rmethod->name;
-				if (strrpos($propertyName, 'get', -strlen($propertyName)) !== FALSE)
+				if ($rmethod !== null)
 				{
-					$propertyNameKey = substr($propertyName, 3);
-					$propertyNameKey = $this->__countLowerCaseChars($propertyNameKey) == 0 ? $propertyNameKey : lcfirst($propertyNameKey);
-					$propertyValue = $object->$propertyName();
-
-					if (is_object($propertyValue))
+					$propertyName = $rmethod->name;
+					if (strrpos($propertyName, 'get', -strlen($propertyName)) !== FALSE)
 					{
-						$propertyValue = $this->__toArray($propertyValue);
-					}
+						$propertyNameKey = substr($propertyName, 3);
+						$propertyNameKey = $this->__countLowerCaseChars($propertyNameKey) == 0 ? $propertyNameKey : lcfirst($propertyNameKey);
+						$propertyValue = $object->$propertyName();
 
-					$output[$propertyNameKey] = $propertyValue;
+						if (is_object($propertyValue))
+						{
+							$propertyValue = $this->__toArray($propertyValue);
+						}
+
+						$output[$propertyNameKey] = $propertyValue;
+					}
 				}
 			}
-		}
 
-		return $output;
+			return $output;
+		}
+		else
+		{
+			return array($object);
+		}
 	}
 
 	protected function __countLowerCaseChars($input)
