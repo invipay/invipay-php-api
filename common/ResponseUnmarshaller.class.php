@@ -142,7 +142,7 @@ class ResponseUnmarshaller
 				{
 					$propertyPath = $pathPrefix === null ? $key : $pathPrefix . '.' . $key;
 					$propertyIsArray = false;
-					$propertyClass = $this->resolvePropertyClass($setter, $propertyPath, $propertyIsArray);
+					$propertyClass = $this->resolvePropertyClass($setter, $propertyPath, $data, $propertyIsArray);
 
 					Logger::trace(Logger::format("Property: {0}, of type: {1}, is array: {2}", $propertyPath, is_object($propertyClass) ? $propertyClass->getName() : $propertyClass, $propertyIsArray));
 
@@ -172,13 +172,13 @@ class ResponseUnmarshaller
 		return null;
 	}
 
-	protected function resolvePropertyClass($setter, $propertyPath, &$propertyIsArray)
+	protected function resolvePropertyClass($setter, $propertyPath, $rawData, &$propertyIsArray)
 	{
 		$output = null;
 
 		if (array_key_exists($propertyPath, $this->propertyClassResolveFunctions) && is_callable($this->propertyClassResolveFunctions[$propertyPath]))
 		{
-			$output = call_user_func($this->propertyClassResolveFunctions[$propertyPath], $container);
+			$output = call_user_func($this->propertyClassResolveFunctions[$propertyPath], $rawData);
 		}
 
 		if ($output === null)
