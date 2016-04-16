@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
+* 	@version 2.0
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,18 +30,19 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/lib/AbstractRestApiClient.class.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/InvoiceData.class.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/OrderData.class.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/OrderConversionData.class.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionDetails.class.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionItemDetails.class.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionsFilter.class.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionSide.enum.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionType.enum.php");
-require_once(dirname(__FILE__) ."/dto/FileInfo.class.php");
+require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
 
-class TransactionsApiClient extends AbstractRestApiClient
+require_once(dirname(__FILE__) ."/transactions/dto/InvoiceData.class.php");
+require_once(dirname(__FILE__) ."/transactions/dto/OrderData.class.php");
+require_once(dirname(__FILE__) ."/transactions/dto/OrderConversionData.class.php");
+require_once(dirname(__FILE__) ."/transactions/dto/TransactionDetails.class.php");
+require_once(dirname(__FILE__) ."/transactions/dto/TransactionItemDetails.class.php");
+require_once(dirname(__FILE__) ."/transactions/dto/TransactionsFilter.class.php");
+require_once(dirname(__FILE__) ."/transactions/dto/TransactionSide.enum.php");
+require_once(dirname(__FILE__) ."/transactions/dto/TransactionType.enum.php");
+require_once(dirname(__FILE__) ."/common/dto/FileInfo.class.php");
+
+class TransactionsApiClient extends BaseApiClient
 {
 	protected function getServiceAddress(){ return '/transactions'; }
 
@@ -49,47 +50,112 @@ class TransactionsApiClient extends AbstractRestApiClient
 
 	public function createInvoice(InvoiceData $data)
 	{
-		return $this->__call_ws_action('/createInvoice', null, $data, 'POST', 'TransactionDetails');
+		$connection =  $this->createConnection()
+							->setMethodPath('/createInvoice')
+							->setBody($data)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
+
+		return $connection->call();
 	}
 
 	public function createOrder(OrderData $data)
 	{
-		return $this->__call_ws_action('/createOrder', null, $data, 'POST', 'TransactionDetails');
+		$connection = $this->createConnection()
+							->setMethodPath('/createOrder')
+							->setBody($data)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
+		
+		return $connection->call();
 	}
 
 	public function getTransaction($id)
 	{
-		return $this->__call_ws_action('/details', array('id' => $id), null, 'GET', 'TransactionDetails');
+		$connection = $this->createConnection()
+							->setMethodPath('/details')
+							->setQuery(array('id' => $id))
+							->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
+
+		return $connection->call();
 	}
 
 	public function listTransactions(TransactionsFilter $filter)
 	{
-		return $this->__call_ws_action('/list', null, $filter, 'POST', 'TransactionDetails', true);
+		$connection = $this->createConnection()
+							->setMethodPath('/list')
+							->setBody($filter)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResponseUnmarshaller()
+					->setOutputClass(new TransactionDetails)
+					->setIsOutputAnArray(true);
+					
+		return $connection->call();
 	}
 
 	public function getDocumentInfo($id)
 	{
-		return $this->__call_ws_action('/document_info', array('id' => $id), null, 'GET', 'FileInfo');
+		$connection = $this->createConnection()
+							->setMethodPath('/document_info')
+							->setQuery(array('id' => $id))
+							->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new FileInfo);
+					
+		return $connection->call();
 	}
 
 	public function downloadDocument($id)
 	{
-		return $this->__call_ws_action('/document', array('id' => $id), null, 'GET', null, false, true);
+		$connection = $this->createConnection()
+							->setMethodPath('/document')
+							->setQuery(array('id' => $id))
+							->setHttpMethod(RestApiConnection::HTTP_GET)
+							->setIsResponseSignatureCheckDisabled(true);
+
+		return $connection->call();
 	}
 
 	public function confirmDelivery($id)
 	{
-		return $this->__call_ws_action('/confirm_delivery', array('id' => $id), null, 'GET', 'TransactionDetails');
+		$connection = $this->createConnection()
+							->setMethodPath('/confirm_delivery')
+							->setQuery(array('id' => $id))
+							->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
+
+		return $connection->call();
 	}
 
 	public function convertOrderToInvoice(OrderConversionData $data)
 	{
-		return $this->__call_ws_action('/convert', null, $data, 'POST', 'TransactionDetails');
+		$connection = $this->createConnection()
+							->setMethodPath('/convert')
+							->setBody($data)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+					
+		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
+
+		return $connection->call();
 	}
 
 	public function attachDocument($id, FileData $document)
 	{
-		return $this->__call_ws_action('/document_attach', array('id' => $id), $document, 'POST', 'TransactionDetails');
+		$connection = $this->createConnection()
+							->setMethodPath('/document_attach')
+							->setQuery(array('id' => $id))
+							->setBody($data)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
+		
+		return $connection->call();
 	}
 }
 

@@ -30,45 +30,13 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
+require_once(dirname(__FILE__) ."/ApiOperationException.class.php");
 
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+class AuthorizationException extends ApiOperationException
 {
-	protected function getServiceAddress(){ return '/test'; }
-
-	////////////////////////////////////////////////////////////////////////////
-
-	public function getDate()
+	public function __construct($message = null, $data = array())
 	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
-
-	public function echoMessage(EchoIn $request)
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
-
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
-	}
-
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
+		parent::__construct('AuthorizationException', $message, $data);
 	}
 }
 

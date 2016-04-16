@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
+* 	@version 2.0
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,58 +30,63 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/lib/AbstractRestApiClient.class.php");
-require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentStartInfo.class.php");
-require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentData.class.php");
-require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentCreationData.class.php");
-require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentManagementData.class.php");
-require_once(dirname(__FILE__) ."/dto/paygateapiservice/PaymentStatusChangedInfo.class.php");
+require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
 
-require_once(dirname(__FILE__) ."/exceptions/paygateapiservice/TransactionContractorException.class.php");
+require_once(dirname(__FILE__) ."/paygate/dto/PaymentStartInfo.class.php");
+require_once(dirname(__FILE__) ."/paygate/dto/PaymentData.class.php");
+require_once(dirname(__FILE__) ."/paygate/dto/PaymentCreationData.class.php");
+require_once(dirname(__FILE__) ."/paygate/dto/PaymentManagementData.class.php");
+require_once(dirname(__FILE__) ."/paygate/dto/PaymentStatusChangedInfo.class.php");
 
-class PaygateApiClient extends AbstractRestApiClient
+require_once(dirname(__FILE__) ."/paygate/exceptions/TransactionContractorException.class.php");
+
+class PaygateApiClient extends BaseApiClient
 {
 	protected function getServiceAddress(){ return '/paygate'; }
 
 	////////////////////////////////////////////////////////////////////////////
 
-	public function paymentStatusFromCallbackPost($callbackDataFormat)
+	public function paymentStatusFromCallbackPost()
 	{
-		return $this->paymentStatusFromCallback(file_get_contents('php://input'), $callbackDataFormat);
-	}
-
-	public function paymentStatusFromCallback($callbackData, $callbackDataFormat = CallbackDataFormat::JSON)
-	{
-		$output = null;
-
-		if ($this->__checkRequestHash($callbackData))
-		{
-			switch ($callbackDataFormat)
-			{
-				case CallbackDataFormat::JSON: $output = $this->__mapArrayToObject(json_decode($callbackData, true), 'PaymentStatusChangedInfo', false); break;
-				case CallbackDataFormat::XML: $output = $this->__mapArrayToObject($this->__xmlToArray($callbackData), 'PaymentStatusChangedInfo', false); break;
-				default: break;
-			}
-
-			return $output;
-		}
+		return $this->createCallbackHandler()->handleFromPost(new PaymentStatusChangedInfo);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
 	public function createPayment(PaymentCreationData $paymentData)
 	{
-		return $this->__call_ws_action('/create', null, $paymentData, 'POST', 'PaymentStartInfo');
+		$connection = $this->createConnection()
+							->setMethodPath('/create')
+							->setBody($paymentData)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+				
+		$connection->getResponseUnmarshaller()->setOutputClass(new PaymentStartInfo);
+				
+		return $connection->call();
 	}
 
 	public function getPayment($id)
 	{
-		return $this->__call_ws_action('/details', array('id' => $id), null, 'GET', 'PaymentData');
+		$connection = $this->createConnection()
+							->setMethodPath('/details')
+							->setQuery(array('id' => $id))
+							->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new PaymentData);
+				
+		return $connection->call();
 	}
 
 	public function managePayment(PaymentManagementData $managementData)
 	{
-		return $this->__call_ws_action('/manage', null, $managementData, 'POST', 'PaymentData');
+		$connection = $this->createConnection()
+							->setMethodPath('/manage')
+							->setBody($managementData)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+				
+		$connection->getResponseUnmarshaller()->setOutputClass(new PaymentData);
+		
+		return $connection->call();
 	}
 }
 

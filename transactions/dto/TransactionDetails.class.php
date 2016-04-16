@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 2.0
+* 	@version 1.0.4
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,46 +30,28 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
+require_once(dirname(__FILE__) ."/../../common/dto/BaseDocumentDetails.class.php");
+require_once(dirname(__FILE__) ."/TransactionType.enum.php");
+require_once(dirname(__FILE__) ."/TransactionItemDetails.class.php");
 
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+class TransactionDetails extends BaseDocumentDetails
 {
-	protected function getServiceAddress(){ return '/test'; }
+	protected $note;
+	protected $noRisk;
+	protected $type;
+	protected $items = array();
 
-	////////////////////////////////////////////////////////////////////////////
+	public function getNote($note){ return $this->note; }
+	public function setNote($note){ $this->note = $note; }
 
-	public function getDate()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
+	public function getNoRisk(){ return $this->noRisk; }
+	public function setNoRisk($noRisk){ $this->noRisk = $noRisk; }
 
-		return $connection->call();
-	}
+	public function getType(){ return $this->type; }
+	public function setType($type){ $this->type = $type; }
 
-	public function echoMessage(EchoIn $request)
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
-
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
-	}
-
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
+	public function getItems(){ return $this->items; }
+	public function setItems(array $items = null, TransactionItemDetails $itemTypeHint = null){ $this->items = $items; }
 }
 
 ?>

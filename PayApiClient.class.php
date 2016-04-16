@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.5
+* 	@version 2.0
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,93 +30,61 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/lib/AbstractRestApiClient.class.php");
+require_once(dirname(__FILE__)."/common/BaseApiClient.class.php");
+require_once(dirname(__FILE__)."/common/exceptions/ObjectNotFoundException.class.php");
+require_once(dirname(__FILE__)."/common/exceptions/AuthorizationException.class.php");
 
-// require_once(dirname(__FILE__) ."/dto/payapiservice/AuthorizationSMSRequest.class.php");
-// require_once(dirname(__FILE__) ."/dto/payapiservice/AuthorizationTransferRequest.class.php");
-// require_once(dirname(__FILE__) ."/dto/payapiservice/BuyerEmployee.class.php");
-// require_once(dirname(__FILE__) ."/dto/payapiservice/OperationState.enum.php");
-// require_once(dirname(__FILE__) ."/dto/payapiservice/PaymentConfiguration.class.php");
-// require_once(dirname(__FILE__) ."/dto/payapiservice/PaymentConfimationRequest.class.php");
-// require_once(dirname(__FILE__) ."/dto/payapiservice/PaymentOperationState.class.php");
-// require_once(dirname(__FILE__) ."/dto/payapiservice/PaymentStartRequest.class.php");
-// require_once(dirname(__FILE__) ."/dto/payapiservice/BankTransferRedirectionData.class.php");
+require_once(dirname(__FILE__)."/pay/dto/EmployeeData.class.php");
+require_once(dirname(__FILE__)."/pay/dto/EmployeeDetails.class.php");
+require_once(dirname(__FILE__)."/pay/dto/EmployeesCreationWithSMSAuthorizationData.class.php");
+require_once(dirname(__FILE__)."/pay/dto/EmployeesCreationWithTransferAuthorizationData.class.php");
+require_once(dirname(__FILE__)."/pay/dto/IEmployeesCreationRequest.interface.php");
+require_once(dirname(__FILE__)."/pay/dto/OperationState.enum.php");
+require_once(dirname(__FILE__)."/pay/dto/PaymentDetails.class.php");
+require_once(dirname(__FILE__)."/pay/dto/PaymentOperationDetails.class.php");
+require_once(dirname(__FILE__)."/pay/dto/PaymentOperationState.class.php");
+require_once(dirname(__FILE__)."/pay/exceptions/ConfirmationException.class.php");
 
-require_once(dirname(__FILE__) ."/dto/payapiservice/PaymentStartRequest.class.php");
-require_once(dirname(__FILE__) ."/dto/transactionapiservice/TransactionDetails.class.php");
 
-require_once(dirname(__FILE__) ."/exceptions/payapiservice/BuyerAccountException.class.php");
-require_once(dirname(__FILE__) ."/exceptions/payapiservice/CallbackReceivedException.class.php");
-require_once(dirname(__FILE__) ."/exceptions/payapiservice/ConfirmationException.class.php");
-require_once(dirname(__FILE__) ."/exceptions/payapiservice/SellerAccountException.class.php");
-
-class PayApiClient extends AbstractRestApiClient
+class PayApiClient extends BaseApiClient
 {
 	protected function getServiceAddress(){ return '/pay'; }
 
 	////////////////////////////////////////////////////////////////////////////
 
-	public function paymentOperationStateFromCallbackPost($callbackDataFormat, $throwOnError = true)
+	public function paymentOperationStateFromCallbackPost()
 	{
-		return $this->paymentOperationStateFromCallback(file_get_contents('php://input'), $callbackDataFormat, $throwOnError = true);
-	}
-
-	public function paymentOperationStateFromCallback($callbackData, $callbackDataFormat = CallbackDataFormat::JSON, $throwOnError = true)
-	{
-		$output = null;
-
-		if ($this->__checkRequestHash($callbackData))
-		{
-			switch ($callbackDataFormat)
-			{
-				case CallbackDataFormat::JSON: $output = $this->__mapArrayToObject(json_decode($callbackData, true), 'PaymentOperationState', false); break;
-				case CallbackDataFormat::XML: $output = $this->__mapArrayToObject($this->__xmlToArray($callbackData), 'PaymentOperationState', false); break;
-				default: break;
-			}
-
-			if ($output !== null)
-			{
-				$dataString = $output->getData();
-				$dataType = $output->getDataType();
-				$dataObject = null;
-
-				switch ($callbackDataFormat)
-				{
-					case CallbackDataFormat::JSON: $dataObject = $this->__mapArrayToObject(json_decode($callbackData, true), $dataType, false); break;
-					case CallbackDataFormat::XML: $dataObject = $this->__mapArrayToObject($this->__xmlToArray($callbackData), $dataType, false); break;
-					default: break;
-				}
-
-				if ($dataObject !== null)
-				{
-					$output->setData($dataObject);
-				}
-
-				if ($throwOnError && $dataObject->getData() instanceof ApiOperationException)
-				{
-					throw new CallbackReceivedException($output->getPaymentId(), $dataObject->getData());
-				}
-			}
-
-			return $output;
-		}
+		return $this->getResponseUnmarshaller()
+					->setDataFormat($callbackDataFormat)
+					->setOutputClass(new PaymentOperationState)
+					->addPropertyClassResolveFunction('data', function($root){ return $root->getDataType(); })
+					->unmarshall($callbackData);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
-	public function startPayment(PaymentStartRequest $data)
+	public function startPayment(PaymentStartRequest $paymentData)
 	{
-		return $this->__call_ws_action('/start', null, $data, 'POST', null);
 	}
 
-	public function selectEmployee($paymentId, $employeeId)
+	public function beginConfirmation($paymentId, $employeeId)
 	{
-		return $this->__call_ws_action('/buyer/employee/select', array('paymentId' => $paymentId), $employeeId, 'POST', null, false, false, 'text/plain');
 	}
 
-	public function confirmPayment($paymentId, $code)
+	public function completeConfirmation($paymentId, $token)
 	{
-		return $this->__call_ws_action('/confirm', array('paymentId' => $paymentId), $code, 'POST', 'TransactionDetails', false, false, 'text/plain');
+	}
+
+	public function addEmployeesWithTransferAuthorization($paymentId, EmployeesCreationWithTransferAuthorizationData $data)
+	{
+	}
+
+	public function beginAddingEmployeesWithSMSAuthorization($paymentId, EmployeesCreationWithSMSAuthorizationData $data)
+	{
+	}
+
+	public function completeAddingEmployeesWithSMSAuthorization($paymentId, $token)
+	{
 	}
 }
 

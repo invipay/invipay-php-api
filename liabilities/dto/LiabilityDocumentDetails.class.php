@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 2.0
+* 	@version 1.0.4
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,46 +30,22 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
+require_once(dirname(__FILE__) . "/../../common/dto/BaseDocumentDetails.class.php");
 
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+abstract class LiabilityDocumentDetails extends BaseDocumentDetails
 {
-	protected function getServiceAddress(){ return '/test'; }
+	protected $unsettledGross;
+	protected $unsettledNet;
+	protected $unsettledTax;
 
-	////////////////////////////////////////////////////////////////////////////
+	public function getUnsettledGross(){ return $this->unsettledGross; }
+	public function setUnsettledGross($unsettledGross){ $this->unsettledGross = $unsettledGross; }
 
-	public function getDate()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
+	public function getUnsettledNet(){ return $this->unsettledNet; }
+	public function setUnsettledNet($unsettledNet){ $this->unsettledNet = $unsettledNet; }
 
-		return $connection->call();
-	}
-
-	public function echoMessage(EchoIn $request)
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
-
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
-	}
-
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
+	public function getUnsettledTax(){ return $this->unsettledTax; }
+	public function setUnsettledTax($unsettledTax){ $this->unsettledTax = $unsettledTax; }
 }
 
 ?>

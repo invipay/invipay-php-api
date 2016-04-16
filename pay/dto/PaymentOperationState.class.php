@@ -30,46 +30,24 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
-
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+class PaymentOperationState
 {
-	protected function getServiceAddress(){ return '/test'; }
+    protected $paymentId;
+    protected $state;
+    protected $dataType;
+    protected $data;
 
-	////////////////////////////////////////////////////////////////////////////
+    public function getPaymentId() { return $this->paymentId; }
+    public function setPaymentId($paymentId) { $this->paymentId = $paymentId; }
 
-	public function getDate()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
+    public function getState() { return $this->state; }
+    public function setState($state) { $this->state = $state; }
 
-		return $connection->call();
-	}
+    public function getDataType() { return $this->dataType; }
+    public function setDataType($dataType) { $this->dataType = $dataType; }
 
-	public function echoMessage(EchoIn $request)
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
-
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
-	}
-
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
+    public function getData() { return $this->data; }
+    public function setData($data) { $this->data = $data; }
 }
 
 ?>

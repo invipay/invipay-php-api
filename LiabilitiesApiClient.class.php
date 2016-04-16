@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
+* 	@version 2.0
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,13 +30,14 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/lib/AbstractRestApiClient.class.php");
-require_once(dirname(__FILE__) ."/dto/ListFilter.class.php");
-require_once(dirname(__FILE__) ."/dto/liabilitiesapiservice/CommissionInvoiceDetails.class.php");
-require_once(dirname(__FILE__) ."/dto/liabilitiesapiservice/InterestInvoiceDetails.class.php");
-require_once(dirname(__FILE__) ."/dto/liabilitiesapiservice/InterestNoteDetails.class.php");
+require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
 
-class LiabilitiesApiClient extends AbstractRestApiClient
+require_once(dirname(__FILE__) ."/common/dto/ListFilter.class.php");
+require_once(dirname(__FILE__) ."/liabilities/dto/CommissionInvoiceDetails.class.php");
+require_once(dirname(__FILE__) ."/liabilities/dto/InterestInvoiceDetails.class.php");
+require_once(dirname(__FILE__) ."/liabilities/dto/InterestNoteDetails.class.php");
+
+class LiabilitiesApiClient extends BaseApiClient
 {
 	protected function getServiceAddress(){ return '/liabilities'; }
 
@@ -44,51 +45,117 @@ class LiabilitiesApiClient extends AbstractRestApiClient
 
 	public function getCommissionInvoice($id)
 	{
-		return $this->__call_ws_action('/ci/details', array('id' => $id), null, 'GET', 'CommissionInvoiceDetails');
+		$connection = $this->createConnection()
+							->setMethodPath('/ci/details')
+							->setQuery(array('id' => $id))
+							->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResultUnmarshaller()->setOutputClass(new CommissionInvoiceDetails);
+
+		return $connection->call();
 	}
 
 	public function listCommissionInvoices(ListFilter $filter)
 	{
-		return $this->__call_ws_action('/ci/list', null, $filter, 'POST', 'CommissionInvoiceDetails', true);
+		$connection = $this->createConnection()
+					->setMethodPath('/ci/list')
+					->setBody($filter)
+					->setHttpMethod(RestApiConnection::HTTP_POST);
+					
+		$connection->getResultUnmarshaller()->setOutputClass(new CommissionInvoiceDetails)
+											->setIsOutputAnArray(true);
+
+		return $connection->call();
 	}
 
 	public function downloadCommissionInvoiceDocument($id)
 	{
-		return $this->__call_ws_action('/ci/document', array('id' => $id), null, 'GET', function($str){ return base64_decode($str); });
+		$connection = $this->createConnection()
+					->setMethodPath('/ci/document')
+					->setQuery(array('id' => $id))
+					->setHttpMethod(RestApiConnection::HTTP_GET);
+					
+		$connection->getResultUnmarshaller()->setOutputUnmarshallFunction(RestApiConnection::OUTPUT_FUNCTION_BASE64);
+
+		return $connection->call();
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
 	public function getInterestInvoice($id)
 	{
-		return $this->__call_ws_action('/ii/details', array('id' => $id), null, 'GET', 'InterestInvoiceDetails');
+		$connection = $this->createConnection()
+					->setMethodPath('/ii/details')
+					->setQuery(array('id' => $id))
+					->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResultUnmarshaller()->setOutputClass(new InterestInvoiceDetails);
+
+		return $connection->call();
 	}
 
 	public function listInterestInvoices(ListFilter $filter)
 	{
-		return $this->__call_ws_action('/ii/list', null, $filter, 'POST', 'InterestInvoiceDetails', true);
+		$connection = $this->createConnection()
+					->setMethodPath('/ii/list')
+					->setBody($filter)
+					->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResultUnmarshaller()->setOutputClass(new InterestInvoiceDetails)
+											->setIsOutputAnArray(true);
+
+		return $connection->call();
 	}
 
 	public function downloadInterestInvoiceDocument($id)
 	{
-		return $this->__call_ws_action('/ii/document', array('id' => $id), null, 'GET', function($str){ return base64_decode($str); });
+		$connection = $this->createConnection()
+					->setMethodPath('/ii/document')
+					->setQuery(array('id' => $id))
+					->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResultUnmarshaller()->setOutputUnmarshallFunction(RestApiConnection::OUTPUT_FUNCTION_BASE64);
+
+		return $connection->call();
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
 	public function getInterestNote($id)
 	{
-		return $this->__call_ws_action('/in/details', array('id' => $id), null, 'GET', 'InterestNoteDetails');
+		$connection = $this->createConnection()
+					->setMethodPath('/in/details')
+					->setQuery(array('id' => $id))
+					->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResultUnmarshaller()->setOutputClass(new InterestNoteDetails);
+
+		return $connection->call();
 	}
 
 	public function listInterestNotes(ListFilter $filter)
 	{
-		return $this->__call_ws_action('/in/list', null, $filter, 'POST', 'InterestNoteDetails', true);
+		$connection = $this->createConnection()
+					->setMethodPath('/in/list')
+					->setBody($filter)
+					->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResultUnmarshaller()->setOutputClass(new InterestNoteDetails)
+											->setIsOutputAnArray(true);
+
+		return $connection->call();
 	}
 
 	public function downloadInterestNoteDocument($id)
 	{
-		return $this->__call_ws_action('/in/document', array('id' => $id), null, 'GET', function($str){ return base64_decode($str); });
+		$connection = $this->createConnection()
+					->setMethodPath('/in/document')
+					->setQuery(array('id' => $id))
+					->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResultUnmarshaller()->setOutputUnmarshallFunction(RestApiConnection::OUTPUT_FUNCTION_BASE64);
+
+		return $connection->call();
 	}
 }
 

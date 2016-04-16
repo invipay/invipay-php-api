@@ -30,46 +30,16 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
-
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+class TransferAuthorizationDetails
 {
-	protected function getServiceAddress(){ return '/test'; }
+    protected $token;
+    protected $url;
 
-	////////////////////////////////////////////////////////////////////////////
+    public function getToken() { return $this->token; }
+    public function setToken($token) { $this->token = $token; }
 
-	public function getDate()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
-
-	public function echoMessage(EchoIn $request)
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
-
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
-	}
-
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
+    public function getUrl() { return $this->url; }
+    public function setUrl($url) { $this->url = $url; }
 }
 
 ?>

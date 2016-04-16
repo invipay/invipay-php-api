@@ -30,46 +30,16 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
+require_once(dirname(__FILE__)."/../../common/dto/BaseSMSAuthorizationData.class.php");
+require_once(dirname(__FILE__)."/EmployeeData.class.php");
+require_once(dirname(__FILE__)."/IEmployeesCreationRequest.interface.php");
 
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+class EmployeesCreationWithSMSAuthorizationData extends BaseSMSAuthorizationData implements IEmployeesCreationRequest
 {
-	protected function getServiceAddress(){ return '/test'; }
+    protected $employees = array();
 
-	////////////////////////////////////////////////////////////////////////////
-
-	public function getDate()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
-
-	public function echoMessage(EchoIn $request)
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
-
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
-	}
-
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
+    public function getEmployees() { return $this->employees; }
+    public function setEmployees(array $employees, EmployeeData $itemTypeHint = null) { $this->employees = $employees; }
 }
 
 ?>

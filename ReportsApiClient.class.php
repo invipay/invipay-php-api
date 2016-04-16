@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.4
+* 	@version 2.0
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,11 +30,12 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/lib/AbstractRestApiClient.class.php");
-require_once(dirname(__FILE__) ."/dto/reportsapiservice/AccountantReportDocument.class.php");
-require_once(dirname(__FILE__) ."/dto/reportsapiservice/ReportFilter.class.php");
+require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
 
-class ReportsApiClient extends AbstractRestApiClient
+require_once(dirname(__FILE__) ."/reports/dto/AccountantReportDocument.class.php");
+require_once(dirname(__FILE__) ."/reports/dto/ReportFilter.class.php");
+
+class ReportsApiClient extends BaseApiClient
 {
 	protected function getServiceAddress(){ return '/reports'; }
 
@@ -42,7 +43,14 @@ class ReportsApiClient extends AbstractRestApiClient
 
 	public function getAccountantReport(ReportFilter $filter)
 	{
-		return $this->__call_ws_action('/accountant', null, $filter, 'POST', 'AccountantReportDocument');
+		$connection = $this->createConnection()
+							->setMethodPath('/accountant')
+							->setBody($filter)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new AccountantReportDocument);
+					
+		return $connection->call();
 	}
 }
 

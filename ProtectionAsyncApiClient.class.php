@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 1.0.5
+* 	@version 2.0
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,12 +30,13 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/lib/AbstractRestApiClient.class.php");
-require_once(dirname(__FILE__) ."/dto/protectionapiservice/CommonTransactionData.class.php");
-require_once(dirname(__FILE__) ."/dto/protectionapiservice/ProtectionResults.class.php");
-require_once(dirname(__FILE__) ."/dto/protectionapiservice/ProtectionResult.class.php");
+require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
 
-class ProtectionAsyncApiClient extends AbstractRestApiClient
+require_once(dirname(__FILE__) ."/protection/dto/CommonTransactionData.class.php");
+require_once(dirname(__FILE__) ."/protection/dto/ProtectionResults.class.php");
+require_once(dirname(__FILE__) ."/protection/dto/ProtectionResult.class.php");
+
+class ProtectionAsyncApiClient extends BaseApiClient
 {
 	protected function getServiceAddress(){ return '/protection/async'; }
 
@@ -43,11 +44,25 @@ class ProtectionAsyncApiClient extends AbstractRestApiClient
 
 	public function protect(array $commonTransactionDataList)
 	{
-		return $this->__call_ws_action('/protect', null, $commonTransactionDataList, 'POST', 'ProtectionResults');
+		$connection = $this->createConnection()
+							->setMethodPath('/protect')
+							->setBody($commonTransactionDataList)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+							
+		$connection->getResponseUnmarshaller()->setOutputClass(new ProtectionResults);
+
+		return $connection->call();
 	}
 
 	public function getResults($id)
 	{
-		return $this->__call_ws_action('/results', array('id' => $id), null, 'GET', 'ProtectionResults');
+		$connection = $this->createConnection()
+							->setMethodPath('/results')
+							->setQuery(array('id' => $id))
+							->setHttpMethod(RestApiConnection::HTTP_GET);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new ProtectionResults);
+
+		return $connection->call();
 	}
 }

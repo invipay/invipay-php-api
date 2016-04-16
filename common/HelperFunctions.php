@@ -30,46 +30,43 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
-
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+function is_cli()
 {
-	protected function getServiceAddress(){ return '/test'; }
+    return (php_sapi_name() === 'cli');
+}
 
-	////////////////////////////////////////////////////////////////////////////
+function is_web()
+{
+	return !is_cli();
+}
 
-	public function getDate()
+function get_environment_new_line()
+{
+	return is_cli() ? "\r\n" : '<br>';
+}
+
+function print_new_line($count = 1)
+{
+	for ($i = 0; $i < $count; $i++)
 	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
+		echo get_environment_new_line();
 	}
+}
 
-	public function echoMessage(EchoIn $request)
+function print_line($text, $count = 1)
+{
+	for ($i = 0; $i < $count; $i++)
 	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
-
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
+		echo $text;
+		print_new_line();
 	}
+}
 
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
+function print_separator()
+{
+	print_new_line();
+	print_line(is_cli() ? '-------------------------' : '<hr>');
+	print_new_line();
 }
 
 ?>

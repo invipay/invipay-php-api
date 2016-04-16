@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 2.0
+* 	@version 1.0.4
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,46 +30,28 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
+require_once(dirname(__FILE__) ."/../../common/dto/FileData.class.php");
+require_once(dirname(__FILE__) ."/../../transactions/dto/OrderToInvoiceData.class.php");
 
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+class PaymentManagementData
 {
-	protected function getServiceAddress(){ return '/test'; }
+	protected $paymentId;
+	protected $conversionData;
+	protected $document;
+	protected $doConfirmDelivery;
 
-	////////////////////////////////////////////////////////////////////////////
+	public function getPaymentId() { return $this->paymentId; }
+	public function setPaymentId($paymentId) { $this->paymentId = $paymentId; }
 
-	public function getDate()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
+	public function getConversionData() { return $this->conversionData; }
+	public function setConversionData(OrderToInvoiceData $conversionData = null) { $this->conversionData = $conversionData; }
 
-		return $connection->call();
-	}
+	public function getDocument() { return $this->document; }
+	public function setDocument(FileData $document = null) { $this->document = $document; }
 
-	public function echoMessage(EchoIn $request)
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
+	public function getDoConfirmDelivery() { return $this->doConfirmDelivery; }
+	public function setDoConfirmDelivery($doConfirmDelivery) { $this->doConfirmDelivery = $doConfirmDelivery; }
 
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
-	}
-
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
 }
 
 ?>

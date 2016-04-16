@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 2.0
+* 	@version 1.0.4
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -30,46 +30,22 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
-
-require_once(dirname(__FILE__) ."/test/dto/EchoIn.class.php");
-require_once(dirname(__FILE__) ."/test/dto/EchoOut.class.php");
-
-class TestApiClient extends BaseApiClient
+class EchoIn
 {
-	protected function getServiceAddress(){ return '/test'; }
+	protected $message;
+	protected $reverse;
 
-	////////////////////////////////////////////////////////////////////////////
-
-	public function getDate()
+	public function __construct($message = null, $reverse = false)
 	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/getDate')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
+		$this->setMessage($message);
+		$this->setReverse($reverse);
 	}
 
-	public function echoMessage(EchoIn $request)
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/echoMessage')
-							->setBody($request)
-							->setHttpMethod(RestApiConnection::HTTP_POST);
+	public function getMessage(){ return $this->message; }
+	public function setMessage($message){ $this->message = $message; }
 
-		$connection->getResponseUnmarshaller()->setOutputClass(new EchoOut);
-
-		return $connection->call();
-	}
-
-	public function whoAmI()
-	{
-		$connection =  $this->createConnection()
-							->setMethodPath('/whoAmI')
-							->setHttpMethod(RestApiConnection::HTTP_GET);
-
-		return $connection->call();
-	}
+	public function getReverse(){ return $this->reverse; }
+	public function setReverse($reverse){ $this->reverse = $reverse; }
 }
 
 ?>
