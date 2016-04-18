@@ -46,6 +46,7 @@ require_once(dirname(__FILE__)."/pay/dto/EmployeesCreationWithTransferAuthorizat
 require_once(dirname(__FILE__)."/pay/dto/IEmployeesCreationRequest.interface.php");
 require_once(dirname(__FILE__)."/pay/dto/OperationState.enum.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentDetails.class.php");
+require_once(dirname(__FILE__)."/pay/dto/PaymentManagementData.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentOperationDetails.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentOperationState.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentStartRequest.class.php");
@@ -111,6 +112,8 @@ class PayApiClient extends BaseApiClient
 		return $connection->call();
 	}
 
+	////////////////////////////////////////////////////////////////////////////
+
 	public function addEmployeesWithTransferAuthorization($paymentId, EmployeesCreationWithTransferAuthorizationData $data)
 	{
 		$connection = $this->createConnection()
@@ -148,6 +151,20 @@ class PayApiClient extends BaseApiClient
 		$connection->getRequestMarshaller()->setContentType(RequestMarshaller::CONTENT_TYPE_PLAIN);
 		$connection->getResponseUnmarshaller()->setOutputClass(null);
 				
+		return $connection->call();
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+
+	public function managePayment(PaymentManagementData $managementData)
+	{
+		$connection = $this->createConnection()
+							->setMethodPath('/manage')
+							->setBody($managementData)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+				
+		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
+		
 		return $connection->call();
 	}
 }
