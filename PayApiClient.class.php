@@ -47,7 +47,6 @@ require_once(dirname(__FILE__)."/pay/dto/IEmployeesCreationRequest.interface.php
 require_once(dirname(__FILE__)."/pay/dto/OperationState.enum.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentDetails.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentManagementData.class.php");
-require_once(dirname(__FILE__)."/pay/dto/PaymentOperationDetails.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentOperationState.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentStartRequest.class.php");
 require_once(dirname(__FILE__)."/pay/exceptions/ConfirmationException.class.php");

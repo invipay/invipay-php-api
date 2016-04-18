@@ -30,12 +30,54 @@
 *	DAMAGE.
 */
 
+require_once(dirname(__FILE__) ."/../../common/dto/Contractor.class.php");
+
 class PaymentDetails
 {
     protected $paymentId;
+    protected $documentNumber;
+    protected $issueDate;
+    protected $dueDate;
+    protected $priceGross;
+    protected $currency = "PLN";
+    protected $note;
+    protected $noRisk = null;
+    protected $isInvoice = false;
+    protected $buyer;
+    protected $employees = array();
 
     public function getPaymentId() { return $this->paymentId; }
     public function setPaymentId($paymentId) { $this->paymentId = $paymentId; }
+
+    public function getDocumentNumber(){ return $this->documentNumber; }
+    public function setDocumentNumber($documentNumber){ $this->documentNumber = $documentNumber; }
+
+    public function getDueDate(){ return $this->dueDate; }
+    public function setDueDate($dueDate){ $this->dueDate = $dueDate; }
+
+    public function getIssueDate(){ return $this->issueDate; }
+    public function setIssueDate($issueDate){ $this->issueDate = $issueDate; }
+
+    public function getPriceGross(){ return $this->priceGross; }
+    public function setPriceGross($priceGross){ $this->priceGross = $priceGross; }
+
+    public function getCurrency(){ return $this->currency; }
+    public function setCurrency($currency){ $this->currency = $currency; }
+    
+    public function getNote(){ return $this->note; }
+    public function setNote($note){ $this->note = $note; }
+
+    public function getNoRisk(){ return $this->noRisk; }
+    public function setNoRisk($noRisk){ $this->noRisk = $noRisk; }
+
+    public function getIsInvoice(){ return $this->isInvoice; }
+    public function setIsInvoice($isInvoice){ $this->isInvoice = $isInvoice; }
+
+    public function getBuyer(){ return $this->buyer; }
+    public function setBuyer(Contractor $buyer = null){ $this->buyer = $buyer; }
+
+    public function getEmployees() { return $this->employees; }
+    public function setEmployees($employees) { $this->employees = $employees; }
 }
 
 ?>
