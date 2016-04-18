@@ -30,7 +30,7 @@
 *	DAMAGE.
 */
 
-class SmsAuthorizationDetails
+class SMSAuthorizationDetails
 {
 	protected $recipient;
 	protected $phoneHint;

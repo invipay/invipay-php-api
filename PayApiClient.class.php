@@ -34,7 +34,7 @@ require_once(dirname(__FILE__)."/common/BaseApiClient.class.php");
 require_once(dirname(__FILE__)."/common/exceptions/ObjectNotFoundException.class.php");
 require_once(dirname(__FILE__)."/common/exceptions/AuthorizationException.class.php");
 
-require_once(dirname(__FILE__)."/common/dto/SmsAuthorizationDetails.class.php");
+require_once(dirname(__FILE__)."/common/dto/SMSAuthorizationDetails.class.php");
 require_once(dirname(__FILE__)."/common/dto/TransferAuthorizationDetails.class.php");
 
 require_once(dirname(__FILE__)."/transactions/dto/TransactionDetails.class.php");
@@ -92,7 +92,7 @@ class PayApiClient extends BaseApiClient
 							->setHttpMethod(RestApiConnection::HTTP_POST);
 		
 		$connection->getRequestMarshaller()->setContentType(RequestMarshaller::CONTENT_TYPE_PLAIN);
-		$connection->getResponseUnmarshaller()->setOutputClass(new SmsAuthorizationDetails);
+		$connection->getResponseUnmarshaller()->setOutputClass(new SMSAuthorizationDetails);
 				
 		return $connection->call();
 	}
@@ -134,7 +134,7 @@ class PayApiClient extends BaseApiClient
 							->setBody($data)
 							->setHttpMethod(RestApiConnection::HTTP_POST);
 		
-		$connection->getResponseUnmarshaller()->setOutputClass(new SmsAuthorizationDetails);
+		$connection->getResponseUnmarshaller()->setOutputClass(new SMSAuthorizationDetails);
 				
 		return $connection->call();
 	}
