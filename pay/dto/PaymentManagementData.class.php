@@ -35,13 +35,9 @@ require_once(dirname(__FILE__) ."/../../transactions/dto/OrderToInvoiceData.clas
 
 class PaymentManagementData
 {
-	protected $paymentId;
 	protected $conversionData;
 	protected $document;
 	protected $doConfirmDelivery;
-
-	public function getPaymentId() { return $this->paymentId; }
-	public function setPaymentId($paymentId) { $this->paymentId = $paymentId; }
 
 	public function getConversionData() { return $this->conversionData; }
 	public function setConversionData(OrderToInvoiceData $conversionData = null) { $this->conversionData = $conversionData; }

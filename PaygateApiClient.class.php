@@ -35,7 +35,7 @@ require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
 require_once(dirname(__FILE__) ."/paygate/dto/PaymentStartInfo.class.php");
 require_once(dirname(__FILE__) ."/paygate/dto/PaymentData.class.php");
 require_once(dirname(__FILE__) ."/paygate/dto/PaymentCreationData.class.php");
-require_once(dirname(__FILE__) ."/paygate/dto/PaymentManagementData.class.php");
+require_once(dirname(__FILE__) ."/paygate/dto/PaymentManagementDataWithId.class.php");
 require_once(dirname(__FILE__) ."/paygate/dto/PaymentStatusChangedInfo.class.php");
 
 require_once(dirname(__FILE__) ."/paygate/exceptions/TransactionContractorException.class.php");
@@ -77,7 +77,7 @@ class PaygateApiClient extends BaseApiClient
 		return $connection->call();
 	}
 
-	public function managePayment(PaymentManagementData $managementData)
+	public function managePayment(PaymentManagementDataWithId $managementData)
 	{
 		$connection = $this->createConnection()
 							->setMethodPath('/manage')

@@ -33,7 +33,7 @@
 require_once(dirname(__FILE__) ."/../../common/dto/FileData.class.php");
 require_once(dirname(__FILE__) ."/../../transactions/dto/OrderToInvoiceData.class.php");
 
-class PaymentManagementData
+class PaymentManagementDataWithId
 {
 	protected $paymentId;
 	protected $conversionData;
