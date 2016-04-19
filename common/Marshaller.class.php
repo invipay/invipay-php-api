@@ -30,7 +30,7 @@
 *	DAMAGE.
 */
 
-class RequestMarshaller
+class Marshaller
 {
 	const CONTENT_TYPE_JSON = 'application/json;charset="utf-8"';
 	const CONTENT_TYPE_PLAIN = 'text/plain';

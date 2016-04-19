@@ -34,8 +34,8 @@ require_once(dirname(__FILE__)."/CompatibilityLayer.php");
 require_once(dirname(__FILE__)."/HelperFunctions.php");
 require_once(dirname(__FILE__)."/Logger.class.php");
 require_once(dirname(__FILE__)."/RestApiConnection.class.php");
-require_once(dirname(__FILE__)."/RequestMarshaller.class.php");
-require_once(dirname(__FILE__)."/ResponseUnmarshaller.class.php");
+require_once(dirname(__FILE__)."/Marshaller.class.php");
+require_once(dirname(__FILE__)."/Unmarshaller.class.php");
 require_once(dirname(__FILE__)."/ApiCallbackHandler.class.php");
 
 require_once(dirname(__FILE__)."/exceptions/ApiOperationException.class.php");

@@ -1,7 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__)."/../../TestApiClient.class.php");
-require_once(dirname(__FILE__)."/../Config.php");
+require_once(dirname(__FILE__)."/../config.php");
 
 $client = new TestApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY);
 

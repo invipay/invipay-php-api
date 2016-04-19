@@ -78,8 +78,6 @@ class PayApiClient extends BaseApiClient
 							->setBody($paymentData)
 							->setHttpMethod(RestApiConnection::HTTP_POST);
 				
-		$connection->getResponseUnmarshaller()->setOutputClass(new PaymentDetails);
-				
 		return $connection->call();
 	}
 
@@ -91,7 +89,7 @@ class PayApiClient extends BaseApiClient
 							->setBody($employeeId)
 							->setHttpMethod(RestApiConnection::HTTP_POST);
 		
-		$connection->getRequestMarshaller()->setContentType(RequestMarshaller::CONTENT_TYPE_PLAIN);
+		$connection->getRequestMarshaller()->setContentType(Marshaller::CONTENT_TYPE_PLAIN);
 		$connection->getResponseUnmarshaller()->setOutputClass(new SMSAuthorizationDetails);
 				
 		return $connection->call();
@@ -105,7 +103,7 @@ class PayApiClient extends BaseApiClient
 							->setBody($token)
 							->setHttpMethod(RestApiConnection::HTTP_POST);
 		
-		$connection->getRequestMarshaller()->setContentType(RequestMarshaller::CONTENT_TYPE_PLAIN);
+		$connection->getRequestMarshaller()->setContentType(Marshaller::CONTENT_TYPE_PLAIN);
 		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
 				
 		return $connection->call();
@@ -147,7 +145,7 @@ class PayApiClient extends BaseApiClient
 							->setBody($token)
 							->setHttpMethod(RestApiConnection::HTTP_POST);
 		
-		$connection->getRequestMarshaller()->setContentType(RequestMarshaller::CONTENT_TYPE_PLAIN);
+		$connection->getRequestMarshaller()->setContentType(Marshaller::CONTENT_TYPE_PLAIN);
 		$connection->getResponseUnmarshaller()->setOutputClass(null);
 				
 		return $connection->call();

@@ -30,8 +30,8 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__)."/RequestMarshaller.class.php");
-require_once(dirname(__FILE__)."/ResponseUnmarshaller.class.php");
+require_once(dirname(__FILE__)."/Marshaller.class.php");
+require_once(dirname(__FILE__)."/Unmarshaller.class.php");
 require_once(dirname(__FILE__)."/SecurityHelper.class.php");
 
 
@@ -63,8 +63,8 @@ class RestApiConnection
 		$this->apiKey = $apiKey;
 		$this->signatureKey = $signatureKey;
 
-		$this->requestMarshaller = new RequestMarshaller($this->apiKey, $this->signatureKey);
-		$this->responseUnmarshaller = new ResponseUnmarshaller($this->apiKey, $this->signatureKey);
+		$this->requestMarshaller = new Marshaller($this->apiKey, $this->signatureKey);
+		$this->responseUnmarshaller = new Unmarshaller($this->apiKey, $this->signatureKey);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,6 +130,12 @@ class RestApiConnection
 		Logger::trace(Logger::format("Calling {0} with http method {1}, body content: {2}", $targetUrl, $this->getHttpMethod(), $bodyContent));
 
 		$response = curl_exec($ch);
+
+		if ($response === false)
+		{
+			throw new Exception('Connection error: ' . curl_error($ch));
+		}
+
 		$responseStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$responseHeaderSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 		curl_close($ch);
@@ -149,7 +155,6 @@ class RestApiConnection
 			$this->getResponseUnmarshaller()->setOutputClassResolveFunction(array('ResponseUnmarshaller', 'ResolveExceptionClass'));
 			$this->getResponseUnmarshaller()->setIsOutputAnArray(false);
 			$this->getResponseUnmarshaller()->setPropertyClassResolveFunctions(array());
-			//$this->getResponseUnmarshaller()->addPropertyClassResolveFu
 		}
 
 		if (!$this->isResponseSignatureCheckDisabled())
@@ -158,7 +163,14 @@ class RestApiConnection
 			$securityHelper->checkSignature($responseSignature, $responseBody);
 		}
 
-		return $this->getResponseUnmarshaller()->unmarshall($responseBody);
+		$output = $this->getResponseUnmarshaller()->unmarshall($responseBody);
+
+		if ($output instanceof Exception)
+		{
+			throw $output;
+		}
+
+		return $output;
 	}
 
 	protected function getHeaders($signature)

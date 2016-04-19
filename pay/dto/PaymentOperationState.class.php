@@ -36,6 +36,7 @@ class PaymentOperationState
     protected $state;
     protected $dataType;
     protected $data;
+    protected $version = 0;
 
     public function getPaymentId() { return $this->paymentId; }
     public function setPaymentId($paymentId) { $this->paymentId = $paymentId; }
@@ -48,6 +49,9 @@ class PaymentOperationState
 
     public function getData() { return $this->data; }
     public function setData($data) { $this->data = $data; }
+    
+    public function getVersion() { return $this->version; }
+    public function setVersion($version){ $this->version = $version; }
 }
 
 ?>

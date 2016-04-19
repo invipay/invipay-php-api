@@ -30,7 +30,7 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__)."/ResponseUnmarshaller.class.php");
+require_once(dirname(__FILE__)."/Unmarshaller.class.php");
 require_once(dirname(__FILE__)."/SecurityHelper.class.php");
 
 
@@ -49,7 +49,7 @@ class ApiCallbackHandler
 		$this->apiKey = $apiKey;
 		$this->signatureKey = $signatureKey;
 
-		$this->unmarshaller = new ResponseUnmarshaller($this->apiKey, $this->signatureKey);
+		$this->unmarshaller = new Unmarshaller($this->apiKey, $this->signatureKey);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

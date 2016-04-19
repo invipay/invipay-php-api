@@ -32,7 +32,7 @@
 
 require_once(dirname(__FILE__)."/exceptions/SignatureException.class.php");
 
-class ResponseUnmarshaller
+class Unmarshaller
 {
 	protected $outputClass;
 	protected $outputClassResolveFunction = null;
@@ -221,7 +221,6 @@ class ResponseUnmarshaller
 
 	protected function mapToArrayOfObjects($data, $outputClass, $pathPrefix = null)
 	{
-		//Logger::debug("
 		$output = array();
 
 		if (is_array($data))
