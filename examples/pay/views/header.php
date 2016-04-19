@@ -7,3 +7,4 @@
 		<script type="text/javascript" src="views/scripts.js"></script>
 	</head>
 	<body>
+		<div id="pleaseWait" style="display: none;">Proszę czekać...</div>

@@ -1,5 +1,5 @@
 	<footer>
-		<a href="index.php">Restart</a>
+		<a href="index.php">Rozpocznij od nowa</a>
 	</footer>
 	</body>
 </html>

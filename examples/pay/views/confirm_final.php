@@ -1,8 +1,8 @@
 <?php include "header.php"; ?>
 
-<h1>Thank you for shopping!</h1>
+<h1>Dziękujemy za zakupy!</h1>
 
-<p>Your payment has been completed. Transaction details:</p>
+<p>Proces płatności został zakończony! Szczegóły transakcji:</p>
 
 <pre>
 	<?php var_dump($transactionData); ?>

@@ -8,6 +8,7 @@ waitForNewAsyncData = function(paymentId, currentVersion, targetElement)
 	  dataType: 'text',
 	  success: function(data)
 	  {
+	  	console.log(data);
 	  	if (data != null)
 	  	{
 	  		var parsed = JSON.parse(data);
@@ -20,7 +21,7 @@ waitForNewAsyncData = function(paymentId, currentVersion, targetElement)
 	  		}
 	  	}
 
-	  	window.setTimeout(waitForNewAsyncData, 5000, paymentId, currentVersion, targetElement);
+	  	window.setTimeout(waitForNewAsyncData, 1000, paymentId, currentVersion, targetElement);
 	  },
 
 	});
@@ -41,3 +42,8 @@ fillUsersLists = function(targetElement, list)
 		}
 	}
 };
+
+showPleaseWait = function()
+{
+	
+}
