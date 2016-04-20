@@ -47,7 +47,7 @@ fillUI = function(paymentData)
 		$('.buyer_taxPayerNumber').text(paymentData.buyer.taxPayerNumber);
 		$('.buyer_companyGovId').text(paymentData.buyer.companyGovId);
 
-		var usersList = $('.users_list');
+		var usersList = $('.usersList');
 		usersList.empty();
 
 		if (paymentData.employees)

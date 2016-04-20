@@ -10,7 +10,7 @@
 	<p>Dodanie nowego pracownika wymaga wykonania zwrotnego przelewu, w wysokości 1.00 PLN. Klikając &quot;Dalej&quot; zostaniesz przekierowany do systemu płatności elektronicznych. Po zakończeniu przelewu wrócisz do naszego sklepu, aby dokończyć płatność.</p>
 <?php endif; ?>
 
-<form method="POST" action="?action=do_add_employees">
+<form method="POST" action="">
 	<table>
 		<?php if (!empty($availableEmployees)): ?>
 			<tr>
@@ -30,7 +30,8 @@
 		<tr><td>Telefon:</td><td><input type="number" name="phone" value="123123123"></td></tr>
 	</table>
 
-	<button type="submit">Dalej</button>
+	<button type="submit" name="action" value="paygate">Cofnij</button>
+	<button type="submit" name="action" value="do_add_employees">Dalej</button>
 </form>
 
 <?php include "footer.php"; ?>
