@@ -177,7 +177,7 @@ class RestApiConnection
 	{
 		$headers = array( 
 		            "Content-type: " . $this->getRequestMarshaller()->getContentType(), 
-		            "Accept: application/json,application/octet-stream", 
+		            "Accept: application/json,application/octet-stream,text/plain", 
 		            "Cache-Control: no-cache", 
 		            "Pragma: no-cache",
 		            SecurityHelper::HEADER_APIKEY_KEY . ": " . $this->apiKey,

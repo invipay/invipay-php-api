@@ -38,12 +38,7 @@ fillUsersLists = function(targetElement, list)
 		{
 			var employee = list[i];
 			var domId = 'employee_' + i;
-			target.append('<li><input type="radio" name="employeeId" value="' + employee['employeeId'] + '" id="' + domId + '"><label for="' + domId + '">' + employee['firstName'] + ' ' + employee['lastName'] + '</label></li>');
+			target.append('<li><input type="radio" name="employee_id" value="' + employee['employeeId'] + '" id="' + domId + '"><label for="' + domId + '">' + employee['firstName'] + ' ' + employee['lastName'] + '</label></li>');
 		}
 	}
 };
-
-showPleaseWait = function()
-{
-	
-}

@@ -45,6 +45,7 @@ require_once(dirname(__FILE__)."/pay/dto/EmployeesCreationWithSMSAuthorizationDa
 require_once(dirname(__FILE__)."/pay/dto/EmployeesCreationWithTransferAuthorizationData.class.php");
 require_once(dirname(__FILE__)."/pay/dto/IEmployeesCreationRequest.interface.php");
 require_once(dirname(__FILE__)."/pay/dto/OperationState.enum.php");
+require_once(dirname(__FILE__)."/pay/dto/PaymentInfo.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentDetails.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentManagementData.class.php");
 require_once(dirname(__FILE__)."/pay/dto/PaymentOperationState.class.php");
@@ -77,6 +78,8 @@ class PayApiClient extends BaseApiClient
 							->setMethodPath('/start')
 							->setBody($paymentData)
 							->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new PaymentInfo);
 				
 		return $connection->call();
 	}

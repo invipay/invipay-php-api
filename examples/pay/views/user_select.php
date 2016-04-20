@@ -8,7 +8,7 @@
 	</ul>
 
 	<button type="submit" name="action" value="confirm_sms_input">Potwierdź płatność</button>
-	<button type="submit" name="action" value="add_employee">Dodaj nowego pracownika</button>
+	<button type="submit" name="action" value="add_employees">Dodaj nowego pracownika</button>
 </form>
 
 <script type="text/javascript">
