@@ -8,7 +8,7 @@ $version = $_REQUEST['version'];
 $paymentFile = realpath(DIR_REPOSITORY . '/' . $paymentId);
 $output = null;
 
-Logger::debug(Logger::format("Checking repository {1} for payment's {1} data newer then {2}", $paymentFile, $paymentId, $version));
+//Logger::debug("Checking repository {1} for payment's {1} data newer then {2}", $paymentFile, $paymentId, $version);
 
 if (dirname($paymentFile) == DIR_REPOSITORY && file_exists($paymentFile)) {
 
@@ -17,7 +17,7 @@ if (dirname($paymentFile) == DIR_REPOSITORY && file_exists($paymentFile)) {
 	if (!empty($data) && is_array($data) && array_key_exists('version', $data) && array_key_exists('data', $data))
 	{
 		$currentDataVersion = $data['version'];
-		Logger::debug(Logger::format("Version in repository ({0}):\r\n{1}", $currentDataVersion, $data));
+		Logger::debug("Version in repository ({0}):\r\n{1}", $currentDataVersion, $data);
 
 		if ($currentDataVersion > $version)
 		{
@@ -32,7 +32,7 @@ if (dirname($paymentFile) == DIR_REPOSITORY && file_exists($paymentFile)) {
 $marshaller = new Marshaller();
 $output = $marshaller->marshall($output);
 
-Logger::debug(Logger::format("Output: {0}", $output));
+Logger::debug("Output: {0}", $output);
 
 die($output);
 

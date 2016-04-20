@@ -74,8 +74,8 @@ class ApiCallbackHandler
 		}
 
 		Logger::info('Handling callback');
-		Logger::trace(Logger::format('Headers: {0}', $headers));
-		Logger::trace(Logger::format('Body: {0}', $body));
+		Logger::trace('Headers: {0}', $headers);
+		Logger::trace('Body: {0}', $body);
 
 		if (!$this->isSignatureCheckDisabled())
 		{

@@ -12,20 +12,20 @@ $paymentId = null;
 {
 	Logger::info('Getting object received through callback');
 	$data = $client->paymentStatusFromCallbackPost();
-	Logger::trace(Logger::format('Payment status changed info: {0}', $data));
+	Logger::trace('Payment status changed info: {0}', $data);
 
 	$paymentId = $data->getPaymentId();
 }
 
 if ($paymentId !== null)
 {
-	Logger::info(Logger::format('Getting full data of payment {0}', $paymentId));
+	Logger::info('Getting full data of payment {0}', $paymentId);
 	$fullData = $client->getPayment($paymentId);
 
 	$file = dirname(__FILE__)."/repository/" . $paymentId . ".txt";
 	file_put_contents($file, serialize($fullData));
 
-	Logger::info(Logger::format('Data saved to file {0}', $file));
+	Logger::info('Data saved to file {0}', $file);
 }
 
 ?>

@@ -144,7 +144,7 @@ class Unmarshaller
 					$propertyIsArray = false;
 					$propertyClass = $this->resolvePropertyClass($setter, $propertyPath, $data, $propertyIsArray);
 
-					Logger::trace(Logger::format("Property: {0}, of type: {1}, is array: {2}", $propertyPath, is_object($propertyClass) ? $propertyClass->getName() : $propertyClass, $propertyIsArray));
+					Logger::trace("Property: {0}, of type: {1}, is array: {2}", $propertyPath, is_object($propertyClass) ? $propertyClass->getName() : $propertyClass, $propertyIsArray);
 
 					$propertyValue = $this->resolvePropertyValue($value, $propertyClass, $propertyIsArray, $propertyPath);
 					$setter->invoke($output, $propertyValue);

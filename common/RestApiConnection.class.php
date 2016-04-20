@@ -104,7 +104,7 @@ class RestApiConnection
 		Logger::trace('Signature: ' . $signature);
 
 		$headers = $this->getHeaders($signature);
-		Logger::trace(Logger::format('Headers: {0}', $headers));
+		Logger::trace('Headers: {0}', $headers);
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $targetUrl);
@@ -127,7 +127,7 @@ class RestApiConnection
 			default: break;
 		}
 
-		Logger::trace(Logger::format("Calling {0} with http method {1}, body content: {2}", $targetUrl, $this->getHttpMethod(), $bodyContent));
+		Logger::trace("Calling {0} with http method {1}, body content: {2}", $targetUrl, $this->getHttpMethod(), $bodyContent);
 
 		$response = curl_exec($ch);
 
@@ -140,13 +140,13 @@ class RestApiConnection
 		$responseHeaderSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 		curl_close($ch);
 
-		Logger::trace(Logger::format("Response status: {0}, header size: {1}", $responseStatus, $responseHeaderSize));
+		Logger::trace("Response status: {0}, header size: {1}", $responseStatus, $responseHeaderSize);
 
 		$responseHeader = trim(substr($response, 0, $responseHeaderSize));
 		$responseBody = trim(substr($response, $responseHeaderSize));
 
-		Logger::trace(Logger::format("Response header: {0}", $responseHeader));
-		Logger::trace(Logger::format("Response body: {0}", $responseBody));
+		Logger::trace("Response header: {0}", $responseHeader);
+		Logger::trace("Response body: {0}", $responseBody);
 
 		if ($responseStatus != '200')
 		{

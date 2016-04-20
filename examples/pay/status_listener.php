@@ -8,7 +8,7 @@ $paymentId = null;
 {
 	Logger::info('Getting object received through callback');
 	$data = $client->paymentOperationStateFromCallbackPost();
-	Logger::trace(Logger::format('Received from callback: {0}', $data));
+	Logger::trace('Received from callback: {0}', $data);
 
 	$paymentId = $data->getPaymentId();
 	$file = dirname(__FILE__)."/repository/" . $paymentId;
@@ -23,7 +23,7 @@ $paymentId = null;
 		}
 	}
 
-	Logger::info(Logger::format('Putting new data into repository {0}:\r\n{1}', $file, $newData));
+	Logger::info('Putting new data into repository {0}:\r\n{1}', $file, $newData);
 
 	file_put_contents($file, serialize($newData));
 	

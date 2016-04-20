@@ -56,13 +56,13 @@ $request = array();
 
 $result = $client->protect($request);
 
-Logger::info(Logger::format('Result: {0}', $result));
+Logger::info('Result: {0}', $result);
 
 $max_retries = 10;
 
 while ($result->getItemsLeft() > 0 && --$max_retries > 0)
 {
-	Logger::info(Logger::format('Checking if results are available. Checks left: {0}.', $max_retries));
+	Logger::info('Checking if results are available. Checks left: {0}.', $max_retries);
 	sleep(10);
 	$result = $client->getResults($result->getOperationId());
 }

@@ -16,7 +16,7 @@ $client = new ReportsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATU
 
 	$result = $client->getAccountantReport($filter);
 
-	Logger::info(Logger::format('Result is: {0}', $result));
+	Logger::info('Result is: {0}', $result);
 	
 	print_separator();
 }

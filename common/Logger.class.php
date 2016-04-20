@@ -37,12 +37,16 @@ class Logger
 	const INFO = "INFO";
 	const TRACE = "TRACE";
 
+	protected static $entryFormat = '{0} [{1}] - {2}';
 	protected static $enabledLevels = null;
 	protected static $writer = null;
 
 	private function __construct()
 	{
 	}
+
+	public static function getEntryFormat(){ return self::$entryFormat; }
+	public static function setEntryFormat($entryFormat){ self::$entryFormat = $entryFormat; }
 
 	public static function getWriter()
 	{
@@ -75,48 +79,37 @@ class Logger
 	}
 
 
-	public static function info($message, Exception $exception = null)
+	public static function info($message)
 	{
-		self::write(self::INFO, self::findMessageSource(), $message, $exception);
+		$message = call_user_func_array(array('Logger', 'format'), func_get_args());
+		self::write(self::INFO, self::findMessageSource(), $message);
 	}
 
-	public static function error($message, Exception $exception = null)
+	public static function error($message)
 	{
-		self::write(self::ERROR, self::findMessageSource(), $message, $exception);
+		$message = call_user_func_array(array('Logger', 'format'), func_get_args());
+		self::write(self::ERROR, self::findMessageSource(), $message);
 	}
 
-	public static function debug($message, Exception $exception = null)
+	public static function debug($message)
 	{
-		self::write(self::DEBUG, self::findMessageSource(), $message, $exception);
+		$message = call_user_func_array(array('Logger', 'format'), func_get_args());
+		self::write(self::DEBUG, self::findMessageSource(), $message);
 	}
 
-	public static function trace($message, Exception $exception = null)
+	public static function trace($message)
 	{
-		self::write(self::TRACE, self::findMessageSource(), $message, $exception);
+		$message = call_user_func_array(array('Logger', 'format'), func_get_args());
+		self::write(self::TRACE, self::findMessageSource(), $message);
 	}
 
-	public static function write($level, $messageSource, $message, Exception $exception = null)
+	public static function write($level, $messageSource, $message)
 	{
 		if (self::isLogLevelEnabled($level))
 		{
-			$logEntryText = self::formatEntry($level, $messageSource, $message, $exception);
-
+			$logEntryText = self::format(self::getEntryFormat(), $level, $messageSource, $message);
 			self::getWriter()->write($logEntryText);
 		}
-	}
-
-	protected static function formatEntry($level, $messageSource, $message, Exception $exception = null)
-	{
-		$logEntryText = $level . ' [' . $messageSource .'] - ' . self::format('{0}', $message);
-
-		if ($exception !== null)
-		{
-			$logEntryText .= self::formatException($exception);
-		}
-
-		$logEntryText .= self::getWriter()->getNewLine();
-
-		return $logEntryText;
 	}
 
 	protected static function formatException(Exception $exception)
@@ -142,10 +135,17 @@ class Logger
 			}
 			else if (is_object($arg))
 			{
-				ob_start();
-				var_dump($arg);
-				$txt = ob_get_contents();
-				ob_end_clean();
+				if ($arg instanceof Exception)
+				{
+					$txt = self::formatException($arg);
+				}
+				else
+				{
+					ob_start();
+					var_dump($arg);
+					$txt = ob_get_contents();
+					ob_end_clean();
+				}
 			}
 			else if (is_bool($arg))
 			{
@@ -189,7 +189,7 @@ class StandardLoggerWriter
 
 	public function write($text)
 	{
-		echo $text;
+		echo $text . $this->getNewLine();
 	}
 }
 
@@ -209,7 +209,7 @@ class FileLoggerWriter
 
 	public function write($text)
 	{
-		file_put_contents($this->filePath, $text, FILE_APPEND);
+		file_put_contents($this->filePath, $text . $this->getNewLine(), FILE_APPEND);
 	}
 }
 

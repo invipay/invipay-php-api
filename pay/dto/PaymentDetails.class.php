@@ -31,6 +31,7 @@
 */
 
 require_once(dirname(__FILE__) ."/../../common/dto/Contractor.class.php");
+require_once(dirname(__FILE__) ."/EmployeeDetails.class.php");
 
 class PaymentDetails
 {
@@ -77,7 +78,7 @@ class PaymentDetails
     public function setBuyer(Contractor $buyer = null){ $this->buyer = $buyer; }
 
     public function getEmployees() { return $this->employees; }
-    public function setEmployees($employees) { $this->employees = $employees; }
+    public function setEmployees(array $employees, EmployeeDetails $typeHint = null) { $this->employees = $employees; }
 }
 
 ?>

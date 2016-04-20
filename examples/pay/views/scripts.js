@@ -1,14 +1,19 @@
 var currentInvipayData = null;
 
-waitForNewAsyncData = function(paymentId, currentVersion, targetElement)
+waitForNewAsyncData = function(paymentId, currentVersion, hideOnWait)
 {
+	if (hideOnWait)
+	{
+		$('.hideOnWait').hide();
+		$('.showOnWait').show();
+	}
+
 	$.ajax({
 	  
 	  url: 'status_check.php?paymentId=' + paymentId + '&version=' + currentVersion,
 	  dataType: 'text',
 	  success: function(data)
 	  {
-	  	console.log(data);
 	  	if (data != null)
 	  	{
 	  		var parsed = JSON.parse(data);
@@ -16,29 +21,43 @@ waitForNewAsyncData = function(paymentId, currentVersion, targetElement)
 	  		if (parsed != null)
 	  		{
 		  		currentInvipayData = parsed['data'];
-		  		fillUsersLists(targetElement, currentInvipayData.employees);
+		  		fillUI(currentInvipayData);
+
+				$('.hideOnWait').show();
+				$('.showOnWait').hide();
 		  		return;
 	  		}
 	  	}
 
-	  	window.setTimeout(waitForNewAsyncData, 1000, paymentId, currentVersion, targetElement);
+	  	window.setTimeout(waitForNewAsyncData, 1000, paymentId, currentVersion);
 	  },
 
 	});
 };
 
-fillUsersLists = function(targetElement, list)
+fillUI = function(paymentData)
 {
-	var target = $(targetElement);
-	target.empty();
-
-	if (list)
+	if (paymentData)
 	{
-		for (var i=0; i<list.length; i++)
+		$('.documentNumber').text(paymentData.documentNumber);
+		$('.issueDate').text(paymentData.issueDate);
+		$('.priceGross').text(paymentData.priceGross);
+		$('.currency').text(paymentData.currency);
+		$('.buyer_name').text(paymentData.buyer.name);
+		$('.buyer_taxPayerNumber').text(paymentData.buyer.taxPayerNumber);
+		$('.buyer_companyGovId').text(paymentData.buyer.companyGovId);
+
+		var usersList = $('.users_list');
+		usersList.empty();
+
+		if (paymentData.employees)
 		{
-			var employee = list[i];
-			var domId = 'employee_' + i;
-			target.append('<li><input type="radio" name="employee_id" value="' + employee['employeeId'] + '" id="' + domId + '"><label for="' + domId + '">' + employee['firstName'] + ' ' + employee['lastName'] + '</label></li>');
+			for (var i=0; i<paymentData.employees.length; i++)
+			{
+				var employee = paymentData.employees[i];
+				var domId = 'e_' + employee['employeeId'];
+				usersList.append('<li><input type="radio" name="employee_id" value="' + employee['employeeId'] + '" id="' + domId + '"><label for="' + domId + '">' + employee['firstName'] + ' ' + employee['lastName'] + '</label></li>');
+			}
 		}
 	}
 };

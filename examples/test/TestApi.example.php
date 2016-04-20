@@ -12,7 +12,7 @@ $client = new TestApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_
 
 	$result = $client->getDate();
 
-	Logger::info(Logger::format('Result is: {0}', $result));
+	Logger::info('Result is: {0}', $result);
 	
 	print_separator();
 }
@@ -23,7 +23,7 @@ $client = new TestApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_
 	
 	$result = $client->whoAmI();
 	
-	Logger::info(Logger::format('Result is: {0}', $result));
+	Logger::info('Result is: {0}', $result);
 
 	print_separator();
 }
@@ -34,7 +34,7 @@ $client = new TestApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_
 
 	$result = $client->echoMessage(new EchoIn('Hello world', true));
 	
-	Logger::info(Logger::format('Result is: {0}', $result));
+	Logger::info('Result is: {0}', $result);
 	
 	print_separator();
 }

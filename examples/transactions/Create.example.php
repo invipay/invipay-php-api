@@ -48,7 +48,7 @@ $client = new TransactionsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SI
 
 	$result = $client->createOrder($request);
 
-	Logger::info(Logger::format('Result is: {0}', $result));
+	Logger::info('Result is: {0}', $result);
 	
 	print_separator();
 }
@@ -98,7 +98,7 @@ $client = new TransactionsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SI
 
 	$result = $client->createInvoice($request);
 
-	Logger::info(Logger::format('Result is: {0}', $result));
+	Logger::info('Result is: {0}', $result);
 	
 	print_separator();
 }

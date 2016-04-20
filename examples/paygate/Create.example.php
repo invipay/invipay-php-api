@@ -24,7 +24,7 @@ $client = new PaygateApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATU
 
 	$result = $client->createPayment($request);
 	
-	Logger::info(Logger::format('Result is: {0}', $result));
+	Logger::info('Result is: {0}', $result);
 }
 
 ?>

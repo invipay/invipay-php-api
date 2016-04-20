@@ -2,6 +2,14 @@
 
 <h1>Dodaj nowych pracowników</h1>
 
+<?php if (!empty($availableEmployees)): ?>
+	<p>Dodanie nowego pracownika wymaga jedynie potwierdzenia kodem SMS, który wyślemy na telefon któregoś ze znanych pracowników tej firmy.</p>
+<?php endif; ?>
+
+<?php if (empty($availableEmployees)): ?>
+	<p>Dodanie nowego pracownika wymaga wykonania zwrotnego przelewu, w wysokości 1.00 PLN. Klikając &quot;Dalej&quot; zostaniesz przekierowany do systemu płatności elektronicznych. Po zakończeniu przelewu wrócisz do naszego sklepu, aby dokończyć płatność.</p>
+<?php endif; ?>
+
 <form method="POST" action="?action=do_add_employees">
 	<table>
 		<?php if (!empty($availableEmployees)): ?>
@@ -10,7 +18,7 @@
 				<td>
 					<select name="employee_id">
 						<?php foreach ($availableEmployees as $employee): ?>
-							<option value="<?= $employee['employeeId']; ?>"><?= $employee['firstName'].' '.$employee['lastName']; ?></option>
+							<option value="<?= $employee->getEmployeeId(); ?>"><?= $employee->getFirstName().' '.$employee->getLastName(); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</td>

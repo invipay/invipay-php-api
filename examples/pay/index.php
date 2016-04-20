@@ -26,11 +26,22 @@ else if ($action == 'checkout')
 
 	$_SESSION[SESSION_KEY] = $paymentId;
 
-	header('Location: ' . URL_ROOT . '/index.php?action=user_select');
+	header('Location: ' . URL_ROOT . '/index.php?action=paygate');
 }
-else if ($action == 'user_select')
+else if ($action == 'paygate')
 {
-	include DIR_VIEWS . '/user_select.php';
+	$paymentId = $_SESSION[SESSION_KEY];
+	$paymentOperationData = unserialize(file_get_contents(DIR_REPOSITORY . '/' . $paymentId));
+
+	$paymentData = null;
+	$paymentDataVersion = $paymentOperationData !== null ? $paymentOperationData['version'] : 0;
+
+	if ($paymentOperationData !== null && $paymentOperationData['data'] !== null)
+	{
+		$paymentData = $paymentOperationData['data']->getData();
+	}
+
+	include DIR_VIEWS . '/paygate.php';
 }
 else if ($action == 'confirm_sms_input')
 {
@@ -79,7 +90,7 @@ else if ($action == 'do_add_employees')
 	{
 		$request = new EmployeesCreationWithTransferAuthorizationData();
 		$request->setEmployees(array($newEmployee));
-		$request->setReturnUrl(URL_ROOT . '/index.php?action=user_select');
+		$request->setReturnUrl(URL_ROOT . '/index.php?action=paygate');
 
 		$redirectInfo = $apiClient->addEmployeesWithTransferAuthorization($paymentId, $request);
 
@@ -102,7 +113,7 @@ else if ($action == 'confirm_add_employees')
 	$smsCode = $_REQUEST['sms_code'];
 	$apiClient->completeAddingEmployeesWithSMSAuthorization($paymentId, $smsCode);
 
-	header('Location: index.php?action=user_select');
+	header('Location: index.php?action=paygate');
 }
 
 ?>

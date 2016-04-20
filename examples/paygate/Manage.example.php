@@ -15,16 +15,16 @@ foreach ($payments as $paymentFile)
 {
 	if ($paymentFile != '.' && $paymentFile != '..')
 	{
-		Logger::info(Logger::format('Found payment data {0}', $paymentFile));
+		Logger::info('Found payment data {0}', $paymentFile);
 
 		$paymentData = unserialize(file_get_contents($repository.$paymentFile));
 		$paymentId = $paymentData->getPaymentId();
 
-		Logger::info(Logger::format('Payment {0} has status {1}', $paymentId, $paymentData->getStatus()));
+		Logger::info('Payment {0} has status {1}', $paymentId, $paymentData->getStatus());
 
 		if ($paymentData->getStatus() == PaymentRequestStatus::COMPLETED)
 		{
-			Logger::info(Logger::format('Finalizing payment {0}', $paymentId));
+			Logger::info('Finalizing payment {0}', $paymentId);
 
 			$request = new PaymentManagementData();
 			$request->setPaymentId($paymentId);
@@ -48,7 +48,7 @@ foreach ($payments as $paymentFile)
 
 			$result = $client->managePayment($request);
 
-			Logger::info(Logger::format('Result is: {0}', $result));
+			Logger::info('Result is: {0}', $result);
 		}
 	}
 }
