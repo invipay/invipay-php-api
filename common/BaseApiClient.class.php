@@ -37,6 +37,7 @@ require_once(dirname(__FILE__)."/RestApiConnection.class.php");
 require_once(dirname(__FILE__)."/Marshaller.class.php");
 require_once(dirname(__FILE__)."/Unmarshaller.class.php");
 require_once(dirname(__FILE__)."/ApiCallbackHandler.class.php");
+require_once(dirname(__FILE__)."/ApiUrl.class.php");
 
 require_once(dirname(__FILE__)."/exceptions/ApiOperationException.class.php");
 require_once(dirname(__FILE__)."/exceptions/AccessFromIpDeniedException.class.php");
@@ -47,10 +48,6 @@ require_once(dirname(__FILE__)."/exceptions/ValidationException.class.php");
 
 abstract class BaseApiClient
 {
-	const URL_PRODUCTION = "https://api.invipay.com/api/rest";
-	const URL_DEMO = "http://demo.invipay.com/services/api/rest";
-	const URL_LOCAL = "http://localhost:8080/services/api/rest";
-
 	private $apiKey;
 	private $signatureKey;
 	private $baseUrl;

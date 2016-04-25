@@ -1,6 +1,6 @@
 <?php
 
-define('URL_ROOT', 'http://aeroapi.localhost/pay/');
+define('URL_ROOT', 'http://kp.invipay.com/pay');
 
 define('DIR_ACTIONS', realpath(dirname(__FILE__) . '/actions'));
 define('DIR_VIEWS', realpath(dirname(__FILE__) . '/views'));
@@ -14,10 +14,10 @@ define('SESSION_KEY', 'invipay_payment_id');
 
 require_once(DIR_SDK . '/PayApiClient.class.php');
 
-define('INVIPAY_LOGGER_LEVELS', 'INFO,DEBUG,ERROR,TRACE');
-define('INVIPAY_API_URL', BaseApiClient::URL_LOCAL);
-define('INVIPAY_API_KEY', '00000000-0000-0000-0000-000000000001');
-define('INVIPAY_SIGNATURE_KEY', '00000000-0000-0000-0000-000000000002');
+define('INVIPAY_LOGGER_LEVELS', 'INFO,DEBUG,ERROR,!TRACE');
+define('INVIPAY_API_URL', ApiUrl::URL_DEMO);
+define('INVIPAY_API_KEY', 'ca526d99-9681-47f7-b7e4-a60d853c9c5b');
+define('INVIPAY_SIGNATURE_KEY', '84a1215b-2462-4f2b-99a6-5d8181874ac2');
 
 Logger::setWriter(new FileLoggerWriter(FILE_LOG));
 
