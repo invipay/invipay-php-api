@@ -31,6 +31,7 @@
 */
 
 require_once(dirname(__FILE__) ."/../../common/dto/CallbackDataFormat.enum.php");
+require_once(dirname(__FILE__) ."/PayOperationEvents.enum.php");
 
 class PaymentStartRequest
 {
@@ -45,6 +46,7 @@ class PaymentStartRequest
     protected $note;
     protected $noRisk = null;
     protected $isInvoice = false;
+    protected $subscribedEvents = PayOperationEvents::EMPLOYEES_LIST_CHANGE;
 
     public function getStatusUrl(){ return $this->statusUrl; }
     public function setStatusUrl($statusUrl){ $this->statusUrl = $statusUrl; }
@@ -78,6 +80,9 @@ class PaymentStartRequest
 
     public function getIsInvoice(){ return $this->isInvoice; }
     public function setIsInvoice($isInvoice){ $this->isInvoice = $isInvoice; }
+
+    public function getSubscribedEvents(){ return $this->subscribedEvents; }
+    public function setSubscribedEvents($subscribedEvents){ $this->subscribedEvents = $subscribedEvents; }
 }
 
 ?>

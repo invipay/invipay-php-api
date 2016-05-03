@@ -17,6 +17,7 @@ else if ($action == 'checkout')
 	$request->setDocumentNumber(uniqid('Order/'));
 	$request->setBuyerGovId($_REQUEST['buyer_gov_id']);
 	$request->setPriceGross($_REQUEST['price_gross']);
+	$request->setSubscribedEvents(PayOperationEvents::EMPLOYEES_LIST_CHANGE | PayOperationEvents::PAYMENT_CONFIRMATION);
 
 	$paymentInfo = $apiClient->startPayment($request);
 	$paymentId = $paymentInfo->getPaymentId();

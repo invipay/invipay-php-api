@@ -32,7 +32,7 @@ if (dirname($paymentFile) == DIR_REPOSITORY && file_exists($paymentFile)) {
 $marshaller = new Marshaller();
 $output = $marshaller->marshall($output);
 
-Logger::debug("Output: {0}", $output);
+Logger::trace("Output: {0}", $output);
 
 die($output);
 

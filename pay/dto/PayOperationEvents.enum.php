@@ -30,32 +30,12 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__) ."/PaymentDetails.class.php");
-require_once(dirname(__FILE__) ."/PaymentOperationFinalizationInfo.class.php");
-require_once(dirname(__FILE__) ."/../../common/exceptions/ApiOperationException.class.php");
+require_once(dirname(__FILE__)."/EmployeeData.class.php");
 
-class PaymentOperationState
+abstract class PayOperationEvents
 {
-    protected $paymentId;
-    protected $state;
-    protected $dataType;
-    protected $data;
-    protected $phase;
-
-    public function getPaymentId() { return $this->paymentId; }
-    public function setPaymentId($paymentId) { $this->paymentId = $paymentId; }
-
-    public function getState() { return $this->state; }
-    public function setState($state) { $this->state = $state; }
-
-    public function getDataType() { return $this->dataType; }
-    public function setDataType($dataType) { $this->dataType = $dataType; }
-
-    public function getData() { return $this->data; }
-    public function setData($data) { $this->data = $data; }
-
-    public function getPhase() { return $this->phase; }
-    public function setPhase($phase) { $this->phase = $phase; }
+	const EMPLOYEES_LIST_CHANGE = 1;
+	const PAYMENT_CONFIRMATION = 2;
 }
 
 ?>
