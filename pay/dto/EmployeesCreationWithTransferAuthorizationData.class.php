@@ -31,7 +31,7 @@
 */
 
 require_once(dirname(__FILE__)."/../../common/dto/BaseTransferAuthorizationData.class.php");
-require_once(dirname(__FILE__)."/EmployeeData.class.php");
+require_once(dirname(__FILE__)."/../../common/dto/EmployeeData.class.php");
 require_once(dirname(__FILE__)."/IEmployeesCreationRequest.interface.php");
 
 class EmployeesCreationWithTransferAuthorizationData extends BaseTransferAuthorizationData implements IEmployeesCreationRequest

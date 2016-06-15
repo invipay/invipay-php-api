@@ -30,8 +30,6 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__)."/EmployeeData.class.php");
-
 abstract class OperationState
 {
 	const SUCCESS = "SUCCESS";

@@ -30,7 +30,7 @@
 *	DAMAGE.
 */
 
-require_once(dirname(__FILE__)."/EmployeeData.class.php");
+require_once(dirname(__FILE__)."/../../common/dto/EmployeeData.class.php");
 
 interface IEmployeesCreationRequest
 {

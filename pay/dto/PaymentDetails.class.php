@@ -31,7 +31,7 @@
 */
 
 require_once(dirname(__FILE__) ."/../../common/dto/Contractor.class.php");
-require_once(dirname(__FILE__) ."/EmployeeDetails.class.php");
+require_once(dirname(__FILE__) ."/../../common/dto/EmployeeDetails.class.php");
 
 class PaymentDetails
 {

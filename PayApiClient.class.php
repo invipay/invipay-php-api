@@ -36,11 +36,11 @@ require_once(dirname(__FILE__)."/common/exceptions/AuthorizationException.class.
 
 require_once(dirname(__FILE__)."/common/dto/SMSAuthorizationDetails.class.php");
 require_once(dirname(__FILE__)."/common/dto/TransferAuthorizationDetails.class.php");
+require_once(dirname(__FILE__)."/common/dto/EmployeeData.class.php");
+require_once(dirname(__FILE__)."/common/dto/EmployeeDetails.class.php");
 
 require_once(dirname(__FILE__)."/transactions/dto/TransactionDetails.class.php");
 
-require_once(dirname(__FILE__)."/pay/dto/EmployeeData.class.php");
-require_once(dirname(__FILE__)."/pay/dto/EmployeeDetails.class.php");
 require_once(dirname(__FILE__)."/pay/dto/EmployeesCreationWithSMSAuthorizationData.class.php");
 require_once(dirname(__FILE__)."/pay/dto/EmployeesCreationWithTransferAuthorizationData.class.php");
 require_once(dirname(__FILE__)."/pay/dto/IEmployeesCreationRequest.interface.php");
