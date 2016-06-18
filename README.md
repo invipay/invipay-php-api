@@ -1,4 +1,4 @@
-# inviPay.com PHP API SDK version 2.0
+# inviPay.com PHP API SDK version 2.1
 
 Project for API PHP SDK of inviPay.com
 

@@ -40,6 +40,7 @@ class RestApiConnection
 	const HTTP_GET = 'GET';
 	const HTTP_POST = 'POST';
 	const HTTP_PUT = 'PUT';
+	const HTTP_DELETE = 'DELETE';
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -124,6 +125,7 @@ class RestApiConnection
 			case self::HTTP_GET: curl_setopt($ch, CURLOPT_HTTPGET, true); break;
 			case self::HTTP_POST: curl_setopt($ch, CURLOPT_POST, true); break;
 			case self::HTTP_PUT: curl_setopt($ch, CURLOPT_PUT, true); break;
+			case self::HTTP_DELETE: curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE'); break;
 			default: break;
 		}
 

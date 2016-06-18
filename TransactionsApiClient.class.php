@@ -6,7 +6,7 @@
 *	http://www.invipay.com
 *
 *	@author Kuba Pilecki (kpilecki@invipay.com)
-* 	@version 2.0
+* 	@version 2.1
 *
 *	Redistribution and use in source and binary forms, with or
 *	without modification, are permitted provided that the following
@@ -40,6 +40,9 @@ require_once(dirname(__FILE__) ."/transactions/dto/TransactionItemDetails.class.
 require_once(dirname(__FILE__) ."/transactions/dto/TransactionsFilter.class.php");
 require_once(dirname(__FILE__) ."/transactions/dto/TransactionSide.enum.php");
 require_once(dirname(__FILE__) ."/transactions/dto/TransactionType.enum.php");
+require_once(dirname(__FILE__) ."/transactions/dto/TransactionDeletedInfo.class.php");
+require_once(dirname(__FILE__) ."/transactions/dto/PayoffCost.class.php");
+require_once(dirname(__FILE__) ."/transactions/dto/PayoffDetails.class.php");
 require_once(dirname(__FILE__) ."/common/dto/FileInfo.class.php");
 
 class TransactionsApiClient extends BaseApiClient
@@ -155,6 +158,44 @@ class TransactionsApiClient extends BaseApiClient
 
 		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDetails);
 		
+		return $connection->call();
+	}
+
+	public function deleteTransaction($id)
+	{
+		$connection = $this->createConnection()
+							->setMethodPath('/delete')
+							->setQuery(array('id' => $id))
+							->setHttpMethod(RestApiConnection::HTTP_DELETE);
+
+		$connection->getResponseUnmarshaller()->setOutputClass(new TransactionDeletedInfo);
+
+		return $connection->call();
+	}
+
+	public function calculatePayoffCost(array $list)
+	{
+		$connection = $this->createConnection()
+							->setMethodPath('/payoff/cost')
+							->setBody($list)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResponseUnmarshaller()->setIsOutputAnArray(true)
+												->setOutputClass(new PayoffCost);
+
+		return $connection->call();
+	}
+
+	public function startPayoff(array $list)
+	{
+		$connection = $this->createConnection()
+							->setMethodPath('/payoff')
+							->setBody($list)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+
+		$connection->getResponseUnmarshaller()->setIsOutputAnArray(true)
+												->setOutputClass(new PayoffDetails);
+
 		return $connection->call();
 	}
 }
