@@ -5,8 +5,6 @@ require_once(dirname(__FILE__)."/../config.php");
 
 $client = new ProtectionAsyncApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY);
 
-Logger::info("Requesting transactions protection");
-
 $request = array();
 
 // Add items to request list
@@ -53,6 +51,17 @@ $request = array();
 
 	$request[] = $data;
 }
+
+Logger::info("Calculating protection costs");
+
+$calculations = $client->calculateProtectionCost($request);
+
+Logger::info('Result: {0}', $calculations);
+
+////////////////////////////////////////////////////////
+
+
+Logger::info("Requesting transactions protection");
 
 $result = $client->protect($request);
 

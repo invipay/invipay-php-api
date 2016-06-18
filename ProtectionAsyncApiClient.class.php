@@ -35,6 +35,7 @@ require_once(dirname(__FILE__) ."/common/BaseApiClient.class.php");
 require_once(dirname(__FILE__) ."/protection/dto/CommonTransactionData.class.php");
 require_once(dirname(__FILE__) ."/protection/dto/ProtectionResults.class.php");
 require_once(dirname(__FILE__) ."/protection/dto/ProtectionResult.class.php");
+require_once(dirname(__FILE__) ."/protection/dto/ProtectionCost.class.php");
 
 class ProtectionAsyncApiClient extends BaseApiClient
 {
@@ -62,6 +63,19 @@ class ProtectionAsyncApiClient extends BaseApiClient
 							->setHttpMethod(RestApiConnection::HTTP_GET);
 
 		$connection->getResponseUnmarshaller()->setOutputClass(new ProtectionResults);
+
+		return $connection->call();
+	}
+
+	public function calculateProtectionCost(array $commonTransactionDataList)
+	{
+		$connection = $this->createConnection()
+							->setMethodPath('/cost')
+							->setBody($commonTransactionDataList)
+							->setHttpMethod(RestApiConnection::HTTP_POST);
+							
+		$connection->getResponseUnmarshaller()->setOutputClass(new ProtectionCost)
+												->setIsOutputAnArray(true);
 
 		return $connection->call();
 	}
