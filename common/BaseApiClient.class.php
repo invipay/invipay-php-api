@@ -50,25 +50,29 @@ abstract class BaseApiClient
 {
 	private $apiKey;
 	private $signatureKey;
+	private $partnerApiKey;
+	private $partnerSignatureKey;
 	private $baseUrl;
 
-	public function __construct($baseUrl, $apiKey, $signatureKey)
+	public function __construct($baseUrl, $apiKey, $signatureKey, $partnerApiKey = null, $partnerSignatureKey = null)
 	{
 		$this->baseUrl = $baseUrl !== null ? $baseUrl : BaseApiClient::URL_PRODUCTION;
 		$this->apiKey = $apiKey;
 		$this->signatureKey = $signatureKey;
+		$this->partnerApiKey = $partnerApiKey;
+		$this->partnerSignatureKey = $partnerSignatureKey;
 	}
 
 	protected abstract function getServiceAddress();
 
 	protected function createConnection()
 	{
-		return new RestApiConnection($this->baseUrl.$this->getServiceAddress(), $this->apiKey, $this->signatureKey);
+		return new RestApiConnection($this->baseUrl.$this->getServiceAddress(), $this->apiKey, $this->signatureKey, $this->partnerApiKey, $this->partnerSignatureKey);
 	}
 
 	protected function createCallbackHandler()
 	{
-		return new ApiCallbackHandler($this->apiKey, $this->signatureKey);
+		return new ApiCallbackHandler($this->apiKey, $this->signatureKey, $this->partnerApiKey, $this->partnerSignatureKey);
 	}
 }
 

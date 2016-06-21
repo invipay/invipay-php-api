@@ -34,15 +34,21 @@ class SecurityHelper
 {
     const HEADER_APIKEY_KEY = "X-InviPay-ApiKey";
     const HEADER_SIGNATURE_KEY = "X-InviPay-Signature";
+    const HEADER_PARTNER_APIKEY_KEY = "X-InviPay-Partner-ApiKey";
 	const SIGNING_ALGORHITM_NAME = "sha256";
 
 	private $apiKey;
 	private $signatureKey;
 
-	public function __construct($apiKey, $signatureKey)
+	private $partnerApiKey;
+	private $partnerSignatureKey;
+
+	public function __construct($apiKey, $signatureKey, $partnerApiKey = null, $partnerSignatureKey = null)
 	{
 		$this->apiKey = $apiKey;
 		$this->signatureKey = $signatureKey;
+		$this->partnerApiKey = $partnerApiKey;
+		$this->partnerSignatureKey = $partnerSignatureKey;
 	}
 
 	public function calculateSignature($queryString, $bodyString)
@@ -56,6 +62,13 @@ class SecurityHelper
 		$fullData .= $queryString !== null ? $queryString : '';
 		$fullData .= $bodyString !== null ? $bodyString : '';
 		$fullData .= $this->signatureKey;
+
+		if ($this->partnerSignatureKey !== null)
+		{
+			$fullData .= $this->partnerSignatureKey;
+		}
+
+		//echo "\r\n".$fullData."\r\n";
 
 		return hash(self::SIGNING_ALGORHITM_NAME, $fullData);
 	}

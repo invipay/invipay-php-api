@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__)."/../../ProtectionAsyncApiClient.class.php");
 require_once(dirname(__FILE__)."/../config.php");
 
-$client = new ProtectionAsyncApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY);
+$client = new ProtectionAsyncApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY, INVIPAY_PARTNER_API_KEY, INVIPAY_PARTNER_SIGNATURE_KEY);
 
 $request = array();
 

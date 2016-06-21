@@ -38,18 +38,22 @@ class ApiCallbackHandler
 {
 	private $apiKey;
 	private $signatureKey;
+	private $partnerApiKey;
+	private $partnerSignatureKey;
 
 	protected $isSignatureCheckDisabled = true;
 	protected $unmarshaller;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public function __construct($apiKey, $signatureKey)
+	public function __construct($apiKey, $signatureKey, $partnerApiKey, $partnerSignatureKey)
 	{
 		$this->apiKey = $apiKey;
 		$this->signatureKey = $signatureKey;
+		$this->partnerApiKey = $partnerApiKey;
+		$this->partnerSignatureKey = $partnerSignatureKey;
 
-		$this->unmarshaller = new Unmarshaller($this->apiKey, $this->signatureKey);
+		$this->unmarshaller = new Unmarshaller($this->apiKey, $this->signatureKey, $this->partnerApiKey, $this->partnerSignatureKey);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

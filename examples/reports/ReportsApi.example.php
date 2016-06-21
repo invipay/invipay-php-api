@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__)."/../../ReportsApiClient.class.php");
 require_once(dirname(__FILE__)."/../config.php");
 
-$client = new ReportsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY);
+$client = new ReportsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY, INVIPAY_PARTNER_API_KEY, INVIPAY_PARTNER_SIGNATURE_KEY);
 
 
 // Current InviPay's server date and time (HTTP GET test)

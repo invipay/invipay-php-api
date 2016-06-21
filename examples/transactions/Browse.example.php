@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__)."/../../TransactionsApiClient.class.php");
 require_once(dirname(__FILE__)."/../config.php");
 
-$client = new TransactionsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY);
+$client = new TransactionsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY, INVIPAY_PARTNER_API_KEY, INVIPAY_PARTNER_SIGNATURE_KEY);
 
 $randomItemId = null;
 $randomItemAttachmentId = null;

@@ -46,6 +46,8 @@ class RestApiConnection
 
 	private $apiKey;
 	private $signatureKey;
+	private $partnerApiKey;
+	private $partnerSignatureKey;
 	private $url;
 
 	protected $methodPath;
@@ -58,14 +60,16 @@ class RestApiConnection
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public function __construct($url, $apiKey, $signatureKey)
+	public function __construct($url, $apiKey, $signatureKey, $partnerApiKey = null, $partnerSignatureKey = null)
 	{
 		$this->url = $url;
 		$this->apiKey = $apiKey;
 		$this->signatureKey = $signatureKey;
+		$this->partnerApiKey = $partnerApiKey;
+		$this->partnerSignatureKey = $partnerSignatureKey;
 
-		$this->requestMarshaller = new Marshaller($this->apiKey, $this->signatureKey);
-		$this->responseUnmarshaller = new Unmarshaller($this->apiKey, $this->signatureKey);
+		$this->requestMarshaller = new Marshaller($this->apiKey, $this->signatureKey, $this->partnerApiKey, $this->partnerSignatureKey);
+		$this->responseUnmarshaller = new Unmarshaller($this->apiKey, $this->signatureKey, $this->partnerApiKey, $this->partnerSignatureKey);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +104,7 @@ class RestApiConnection
 		$bodyContent = $this->getBody() !== null ? $this->getRequestMarshaller()->marshall($this->getBody()) : null;
 		Logger::trace('Call body: ' . $bodyContent);
 
-		$securityHelper = new SecurityHelper($this->apiKey, $this->signatureKey);
+		$securityHelper = new SecurityHelper($this->apiKey, $this->signatureKey, $this->partnerApiKey, $this->partnerSignatureKey);
 		$signature = $securityHelper->calculateSignature($queryString, $bodyContent);
 		Logger::trace('Signature: ' . $signature);
 
@@ -185,6 +189,11 @@ class RestApiConnection
 		            SecurityHelper::HEADER_APIKEY_KEY . ": " . $this->apiKey,
 		            SecurityHelper::HEADER_SIGNATURE_KEY . ": ". $signature
 		        );
+
+		if ($this->partnerApiKey !== null)
+		{
+			$headers[] = SecurityHelper::HEADER_PARTNER_APIKEY_KEY . ": " . $this->partnerApiKey;
+		}
 
 		return $headers;
 	}
