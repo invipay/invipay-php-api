@@ -34,6 +34,7 @@ class SecurityHelper
 {
     const HEADER_APIKEY_KEY = "X-InviPay-ApiKey";
     const HEADER_SIGNATURE_KEY = "X-InviPay-Signature";
+    const PHP_HEADER_SIGNATURE_KEY = "HTTP_X_INVIPAY_SIGNATURE";
     const HEADER_PARTNER_APIKEY_KEY = "X-InviPay-Partner-ApiKey";
 	const SIGNING_ALGORHITM_NAME = "sha256";
 
@@ -68,8 +69,6 @@ class SecurityHelper
 			$fullData .= $this->partnerSignatureKey;
 		}
 
-		//echo "\r\n".$fullData."\r\n";
-
 		return hash(self::SIGNING_ALGORHITM_NAME, $fullData);
 	}
 
@@ -78,7 +77,7 @@ class SecurityHelper
 	{
 		if (is_array($headers))
 		{
-			return array_key_exists(SecurityHelper::HEADER_SIGNATURE_KEY, $headers) ? $headers[SecurityHelper::HEADER_SIGNATURE_KEY] : null;
+			return array_key_exists(SecurityHelper::HEADER_SIGNATURE_KEY, $headers) ? $headers[SecurityHelper::HEADER_SIGNATURE_KEY] : (array_key_exists(SecurityHelper::PHP_HEADER_SIGNATURE_KEY, $headers) ? $headers[SecurityHelper::PHP_HEADER_SIGNATURE_KEY] : null);
 		}
 		else if (is_string($headers))
 		{
@@ -91,7 +90,7 @@ class SecurityHelper
 					$key = trim($lineArray[0]);
 					$value = trim($lineArray[1]);
 
-					if ($key === SecurityHelper::HEADER_SIGNATURE_KEY)
+					if ($key === SecurityHelper::HEADER_SIGNATURE_KEY || $key === SecurityHelper::PHP_HEADER_SIGNATURE_KEY)
 					{
 						return $value;
 					}

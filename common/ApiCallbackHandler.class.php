@@ -83,8 +83,9 @@ class ApiCallbackHandler
 
 		if (!$this->isSignatureCheckDisabled())
 		{
-			$securityHelper = new SecurityHelper($this->apiKey, $this->signatureKey);
+			$securityHelper = new SecurityHelper($this->apiKey, $this->signatureKey, $this->partnerApiKey, $this->partnerSignatureKey);
 			$signature = $securityHelper->getSignature($headers);
+			//var_dump($headers);
 			$securityHelper->checkSignature($signature, $body);
 		}
 
