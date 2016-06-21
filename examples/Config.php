@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__FILE__)."/../common/ApiUrl.class.php");
+
 define('INVIPAY_LOGGER_LEVELS', 'INFO,DEBUG,ERROR,!TRACE');
 define('INVIPAY_API_URL', ApiUrl::URL_LOCAL);
 define('INVIPAY_API_KEY', '00000000-0000-0000-0000-000000000001');

@@ -46,7 +46,7 @@ class ApiCallbackHandler
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public function __construct($apiKey, $signatureKey, $partnerApiKey, $partnerSignatureKey)
+	public function __construct($apiKey, $signatureKey, $partnerApiKey = null, $partnerSignatureKey = null)
 	{
 		$this->apiKey = $apiKey;
 		$this->signatureKey = $signatureKey;

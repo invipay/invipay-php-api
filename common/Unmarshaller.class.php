@@ -110,7 +110,7 @@ class Unmarshaller
 		return null;
 	}
 
-	protected function mapToObject($data, $outputClass, $pathPrefix = null)
+	public function mapToObject($data, $outputClass, $pathPrefix = null)
 	{
 		if ($outputClass === null || !is_array($data))
 		{
