@@ -158,7 +158,7 @@ class RestApiConnection
 		{
 			$this->setIsResponseSignatureCheckDisabled(true);
 			$this->getResponseUnmarshaller()->setOutputClass(new ApiOperationException);
-			$this->getResponseUnmarshaller()->setOutputClassResolveFunction(array('ResponseUnmarshaller', 'ResolveExceptionClass'));
+			$this->getResponseUnmarshaller()->setOutputClassResolveFunction(array('Unmarshaller', 'ResolveExceptionClass'));
 			$this->getResponseUnmarshaller()->setIsOutputAnArray(false);
 			$this->getResponseUnmarshaller()->setPropertyClassResolveFunctions(array());
 		}
