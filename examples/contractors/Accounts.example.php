@@ -7,10 +7,12 @@ $client = new ContractorsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIG
 
 // getAccountData by id
 {
-	$result = $client->getAccountData('00000000-0000-0000-0000-0000000000ae', null);
+	$result = $client->getAccountData('00000000-0000-0000-0000-0000000000b5', null);
 	Logger::info('Result is: {0}', $result);
 	print_separator();
 }
+
+die();
 
 // getAccountData by nip
 {
@@ -21,7 +23,7 @@ $client = new ContractorsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIG
 
 // getAccountApiKeys by nip
 {
-	$result = $client->getAccountApiKeys('00000000-0000-0000-0000-0000000000ae');
+	$result = $client->getAccountApiKeys('00000000-0000-0000-0000-0000000000b5');
 	Logger::info('Result is: {0}', $result);
 	print_separator();
 }

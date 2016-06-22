@@ -45,6 +45,8 @@ require_once(dirname(__FILE__)."/exceptions/AuthenticationException.class.php");
 require_once(dirname(__FILE__)."/exceptions/AuthorizationException.class.php");
 require_once(dirname(__FILE__)."/exceptions/ObjectNotFoundException.class.php");
 require_once(dirname(__FILE__)."/exceptions/ValidationException.class.php");
+require_once(dirname(__FILE__)."/exceptions/IntegrationPartnerException.class.php");
+require_once(dirname(__FILE__)."/exceptions/AccessDeniedException.class.php");
 
 abstract class BaseApiClient
 {
