@@ -1,5 +1,7 @@
 <?php
 
+// http://addons.invipay.localhost/PHP%20API/examples/webhooks/Listener.example.php
+
 require_once(dirname(__FILE__)."/../../common/WebHooksClient.class.php");
 require_once(dirname(__FILE__)."/../config.php");
 
@@ -9,7 +11,7 @@ require_once(dirname(__FILE__)."/../../protection/ProtectionApiWebHooks.class.ph
 
 Logger::setWriter(new FileLoggerWriter(dirname(__FILE__). '/Listener.log.txt'));
 
-$client = new WebHooksClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATURE_KEY, INVIPAY_PARTNER_API_KEY, INVIPAY_PARTNER_SIGNATURE_KEY);
+$client = new WebHooksClient(INVIPAY_PARTNER_API_KEY, INVIPAY_PARTNER_SIGNATURE_KEY); // Note that here we're using PARTNER account so we can listen to events issued on behalf of other Contractors related to our platform
 
 $client->onEvent(ContractorsApiWebHooks::getDefinition('ContractorVerificationCompletedEvent'), 'onContractorVerificationCompletedEvent');
 $client->onEvent(ContractorsApiWebHooks::getDefinition('AccountCreationCompletedEvent'), 'onAccountCreationCompletedEvent');
