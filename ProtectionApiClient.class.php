@@ -37,9 +37,9 @@ require_once(dirname(__FILE__) ."/protection/dto/ProtectionResults.class.php");
 require_once(dirname(__FILE__) ."/protection/dto/ProtectionResult.class.php");
 require_once(dirname(__FILE__) ."/protection/dto/ProtectionCost.class.php");
 
-class ProtectionAsyncApiClient extends BaseApiClient
+class ProtectionApiClient extends BaseApiClient
 {
-	protected function getServiceAddress(){ return '/protection/async'; }
+	protected function getServiceAddress(){ return '/protection'; }
 
 	////////////////////////////////////////////////////////////////////////////
 
