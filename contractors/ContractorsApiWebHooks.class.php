@@ -40,7 +40,7 @@ class ContractorsApiWebHooks
 {
 	const ContractorVerificationCompletedEvent = 'ContractorVerificationCompletedEvent';
 	const AccountCreationCompletedEvent = 'AccountCreationCompletedEvent';
-	const AccountProfileChangedEvent = 'AccountProfileChangedEvent';
+	const ContractorProfileChangedEvent = 'ContractorProfileChangedEvent';
 
 	private static $mapping = array();
 
@@ -48,7 +48,7 @@ class ContractorsApiWebHooks
 	{
 		self::$mapping[self::ContractorVerificationCompletedEvent] = new WebHookDefinition(self::ContractorVerificationCompletedEvent, new VerificationResult);
 		self::$mapping[self::AccountCreationCompletedEvent] = new WebHookDefinition(self::AccountCreationCompletedEvent, new AccountCreationResult);
-		self::$mapping[self::AccountProfileChangedEvent] = new WebHookDefinition(self::AccountProfileChangedEvent, new AccountDetails);
+		self::$mapping[self::ContractorProfileChangedEvent] = new WebHookDefinition(self::ContractorProfileChangedEvent, new AccountDetails);
 	}
 
 	public static function getDefinition($key)

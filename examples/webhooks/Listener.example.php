@@ -16,7 +16,7 @@ $client = new WebHooksClient(INVIPAY_PARTNER_API_KEY, INVIPAY_PARTNER_SIGNATURE_
 
 $client->onEvent(ContractorsApiWebHooks::getDefinition('ContractorVerificationCompletedEvent'), 'onContractorVerificationCompletedEvent');
 $client->onEvent(ContractorsApiWebHooks::getDefinition('AccountCreationCompletedEvent'), 'onAccountCreationCompletedEvent');
-$client->onEvent(ContractorsApiWebHooks::getDefinition('AccountProfileChangedEvent'), 'onAccountProfileChangedEvent');
+$client->onEvent(ContractorsApiWebHooks::getDefinition('ContractorProfileChangedEvent'), 'onContractorProfileChangedEvent');
 
 $client->onEvent(TransactionsApiWebHooks::getDefinition('TransactionDeletedEvent'), 'onTransactionDeletedEvent');
 
@@ -38,9 +38,9 @@ function onAccountCreationCompletedEvent($data)
 	Logger::info('Account creation completed with data: {0}', $data);
 }
 
-function onAccountProfileChangedEvent($data)
+function onContractorProfileChangedEvent($data)
 {
-	Logger::info('Account profile changed with data: {0}', $data);
+	Logger::info('Contractor profile changed with data: {0}', $data);
 }
 
 function onTransactionDeletedEvent($data)
