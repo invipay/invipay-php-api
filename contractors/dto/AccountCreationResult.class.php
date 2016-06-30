@@ -36,9 +36,8 @@ require_once(dirname(__FILE__) ."/AccountCreationState.enum.php");
 class AccountCreationResult {
 	
 	protected $operationId;
-	protected $startedAt;
-	protected $completedAt;
 	protected $state;
+	protected $message;
 	protected $account;
 	
 	public function getOperationId() {
@@ -48,29 +47,21 @@ class AccountCreationResult {
 	public function setOperationId($operationId) {
 		$this->operationId = $operationId;
 	}
-	
-	public function getStartedAt() {
-		return $this->startedAt;
-	}
-	
-	public function setStartedAt($startedAt) {
-		$this->startedAt = $startedAt;
-	}
-	
-	public function getCompletedAt() {
-		return $this->completedAt;
-	}
-	
-	public function setCompletedAt($completedAt) {
-		$this->completedAt = $completedAt;
-	}
-	
+
 	public function getState() {
 		return $this->state;
 	}
 	
 	public function setState($state) {
 		$this->state = $state;
+	}
+
+	public function getMessage() {
+		return $this->message;
+	}
+
+	public function setMessage($message) {
+		$this->message = $message;
 	}
 	
 	public function getAccount() {
