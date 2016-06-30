@@ -46,26 +46,26 @@ class ContractorsApiClient extends BaseApiClient
 
 	////////////////////////////////////////////////////////////////////////////
 
-	public function verifyContractor(array $list)
+	public function verifyContractor($data)
 	{
 		$connection =  $this->createConnection()
 							->setMethodPath('/verify')
-							->setBody($list)
+							->setBody($data)
 							->setHttpMethod(RestApiConnection::HTTP_POST);
 
-		$connection->getResponseUnmarshaller()->setOutputClass(new VerificationResults);
+		$connection->getResponseUnmarshaller()->setOutputClass(new VerificationResult);
 
 		return $connection->call();
 	}
 
-	public function getVerificationResults($id)
+	public function getVerificationResult($id)
 	{
 		$connection =  $this->createConnection()
-							->setMethodPath('/verify/results')
+							->setMethodPath('/verify/result')
 							->setQuery(array('id' => $id))
 							->setHttpMethod(RestApiConnection::HTTP_GET);
 
-		$connection->getResponseUnmarshaller()->setOutputClass(new VerificationResults);
+		$connection->getResponseUnmarshaller()->setOutputClass(new VerificationResult);
 
 		return $connection->call();
 	}

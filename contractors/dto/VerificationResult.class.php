@@ -34,11 +34,20 @@ require_once(dirname(__FILE__) ."/VerificationStatus.enum.php");
 
 class VerificationResult {
 	
+	protected $operationId;
 	protected $taxPayerNumber;
 	protected $companyGovId;
 	protected $status;
 	protected $message;
-	
+
+	public function getOperationId() {
+		return $this->operationId;
+	}
+
+	public function setOperationId($operationId) {
+		$this->operationId = $operationId;
+	}
+
 	public function getTaxPayerNumber() {
 		return $this->taxPayerNumber;
 	}
