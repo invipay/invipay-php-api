@@ -33,12 +33,11 @@
 require_once(dirname(__FILE__) ."/../../common/dto/Contractor.class.php");
 require_once(dirname(__FILE__) ."/../../common/dto/EmployeeData.class.php");
 
-class AccountData {
+class AccountData extends Contractor {
 	
 	protected $exId;
-	protected $contractor;
 	protected $employees;
-	
+
 	public function getExId() {
 		return $this->exId;
 	}
@@ -46,15 +45,7 @@ class AccountData {
 	public function setExId($exId) {
 		$this->exId = $exId;
 	}
-	
-	public function getContractor() {
-		return $this->contractor;
-	}
-	
-	public function setContractor(Contractor $contractor) {
-		$this->contractor = $contractor;
-	}
-	
+
 	public function getEmployees() {
 		return $this->employees;
 	}
