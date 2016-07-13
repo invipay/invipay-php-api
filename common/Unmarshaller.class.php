@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 /**
 *	Copyright (C) 2016 inviPay.com
@@ -127,7 +127,7 @@ class Unmarshaller
 			}
 			else if ($class->isSubClassOf('Exception'))
 			{
-				$output = $class->newInstance(array_key_exists('message', $data) ? $data['message'] : "", array_key_exists('code', $data) ? $data['code'] : 0);
+				$output = $class->newInstance(array_key_exists('type', $data) ? $data['type'] : null, array_key_exists('message', $data) ? $data['message'] : "", array_key_exists('code', $data) ? $data['code'] : 0);
 			}
 			else
 			{
