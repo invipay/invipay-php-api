@@ -81,25 +81,25 @@ class Logger
 
 	public static function info($message)
 	{
-		$message = call_user_func_array(array('Logger', 'format'), func_get_args());
+		$message = call_user_func_array_ns(array('Logger', 'format'), func_get_args());
 		self::write(self::INFO, self::findMessageSource(), $message);
 	}
 
 	public static function error($message)
 	{
-		$message = call_user_func_array(array('Logger', 'format'), func_get_args());
+		$message = call_user_func_array_ns(array('Logger', 'format'), func_get_args());
 		self::write(self::ERROR, self::findMessageSource(), $message);
 	}
 
 	public static function debug($message)
 	{
-		$message = call_user_func_array(array('Logger', 'format'), func_get_args());
+		$message = call_user_func_array_ns(array('Logger', 'format'), func_get_args());
 		self::write(self::DEBUG, self::findMessageSource(), $message);
 	}
 
 	public static function trace($message)
 	{
-		$message = call_user_func_array(array('Logger', 'format'), func_get_args());
+		$message = call_user_func_array_ns(array('Logger', 'format'), func_get_args());
 		self::write(self::TRACE, self::findMessageSource(), $message);
 	}
 
