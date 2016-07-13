@@ -91,7 +91,7 @@ function fix_callback_ns($callback)
 {
     if (defined('INVIPAY_COMPATIBILITY_LAYER_53') && is_array($callback))
     {
-        $callback[0] = "\\InviPay\\".$callback[0];
+        $callback[0] = "\\" . __NAMESPACE__ . "\\".$callback[0];
     }
 
     return $callback;
