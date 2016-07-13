@@ -30,54 +30,8 @@
 *	DAMAGE.
 */
 
-
-if (version_compare(PHP_VERSION, '5.3.0') >= 0)
-{
-    if (__NAMESPACE__ !== '')
-    {
-        define('INVIPAY_COMPATIBILITY_LAYER_53', true);
-        require_once "CompatibilityLayer.53.php";
-    }
-}
-
-if(!function_exists('lcfirst'))
-{
-    function lcfirst($str)
-    {
-        $str = $str . '';
-        if (strlen($str) > 0)
-        {
-            $str[0] = strtolower($str[0]);
-            return $str;
-        }
-
-        return $str;
-    }
-}
-
-if(!function_exists('ucfirst'))
-{
-    function ucfirst($str)
-    {
-        $str = $str . '';
-        if (strlen($str) > 0)
-        {
-            $str[0] = strtoupper($str[0]);
-            return $str;
-        }
-
-        return $str;
-    }
-}
-
-function call_user_func_array_ns($callback, $param_arr)
-{
-    if (defined('INVIPAY_COMPATIBILITY_LAYER_53') && is_array($callback))
-    {
-        $callback[0] = "\\InviPay\\".$callback[0];
-    }
-
-    return call_user_func_array($callback, $param_arr);
-}
+class Exception extends \Exception {}
+class ReflectionClass extends \ReflectionClass {}
+class ReflectionMethod extends \ReflectionMethod {}
 
 ?>
