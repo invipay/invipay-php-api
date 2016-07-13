@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 /**
 *	Copyright (C) 2016 inviPay.com
@@ -72,12 +72,29 @@ if(!function_exists('ucfirst'))
 
 function call_user_func_array_ns($callback, $param_arr)
 {
+    return call_user_func_array(fix_callback_ns($callback), $param_arr);
+}
+
+function call_user_func_ns($callback)
+{
+    $args = func_get_args();
+    array_shift($args);
+    return call_user_func_array_ns($callback, $args);
+}
+
+function is_callable_ns($callback)
+{
+    return is_callable(fix_callback_ns($callback));
+}
+
+function fix_callback_ns($callback)
+{
     if (defined('INVIPAY_COMPATIBILITY_LAYER_53') && is_array($callback))
     {
         $callback[0] = "\\InviPay\\".$callback[0];
     }
 
-    return call_user_func_array($callback, $param_arr);
+    return $callback;
 }
 
 ?>

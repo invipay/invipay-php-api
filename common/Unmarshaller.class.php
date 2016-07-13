@@ -69,7 +69,16 @@ class Unmarshaller
 		if (is_array($data) && array_key_exists('type', $data))
 		{
 			$type = $data['type'];
-			if (is_subclass_of($type, 'ApiOperationException'))
+
+			$target = 'ApiOperationException';
+
+			if (defined('INVIPAY_COMPATIBILITY_LAYER_53'))
+			{
+				$target = __NAMESPACE__ . '\\' . $target;
+				$type = __NAMESPACE__ . '\\' . $type;
+			}
+
+			if (is_subclass_of($type, $target))
 			{
 				return $type;
 			}
@@ -93,9 +102,9 @@ class Unmarshaller
 				$json = json_decode($body, true);
 				$class = null;
 
-				if ($this->getOutputClassResolveFunction() !== null && is_callable($this->getOutputClassResolveFunction()))
+				if ($this->getOutputClassResolveFunction() !== null && is_callable_ns($this->getOutputClassResolveFunction()))
 				{
-					$class = call_user_func($this->getOutputClassResolveFunction(), $json);
+					$class = call_user_func_ns($this->getOutputClassResolveFunction(), $json);
 				}
 
 				if ($class === null)
