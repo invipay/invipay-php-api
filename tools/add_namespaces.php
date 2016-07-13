@@ -13,7 +13,7 @@ foreach ($it as $file) {
 	{
 		echo $file."\r\n";
 		$content = file_get_contents($file);
-		$content = str_replace('<?php', "<?php \r\n\r\n namespace " . $namespace . ";\r\n\r\n", $content);
+		$content = str_replace('<?php', "<?php \r\n\r\nnamespace " . $namespace . ";\r\n\r\n", $content);
 		file_put_contents($file, $content);
 
 	}
