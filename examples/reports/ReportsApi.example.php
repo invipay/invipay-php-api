@@ -13,6 +13,7 @@ $client = new ReportsApiClient(INVIPAY_API_URL, INVIPAY_API_KEY, INVIPAY_SIGNATU
 	$filter = new ReportFilter();
 	$filter->setFromDate('2015-01-01 00:00:00');
 	$filter->setToDate(date('Y-m-d H:I:s', time()));
+	$filter->setCurrency('PLN');
 
 	$result = $client->getAccountantReport($filter);
 

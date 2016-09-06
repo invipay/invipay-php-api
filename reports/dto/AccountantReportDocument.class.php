@@ -53,6 +53,7 @@ class AccountantReportDocument
 	protected $clientNIP;
 	protected $collectedFrom;
 	protected $collectedTo;
+	protected $currencyFilter;
 
 	protected $sales = array();
 	protected $purchases = array();
@@ -116,6 +117,16 @@ class AccountantReportDocument
 	public function setCollectedTo($collectedTo){
 		$this->collectedTo = $collectedTo;
 	}
+
+	public function getCurrencyFilter() {
+		return $this->currencyFilter;
+	}
+	
+	public function setCurrencyFilter($currencyFilter) {
+		$this->currencyFilter = $currencyFilter;
+	}
+	
+
 
 	public function getSales(){
 		return $this->sales;

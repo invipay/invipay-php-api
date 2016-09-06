@@ -39,6 +39,7 @@ class AccountantReportInterestInvoiceItem extends DocumentItem
 	private $rsDocumentId;
 	private $value;
 	private $netValue;
+	private $currency;	
 
 	public function getIssueDate(){
 		return $this->issueDate;
@@ -78,6 +79,14 @@ class AccountantReportInterestInvoiceItem extends DocumentItem
 
 	public function setNetValue($netValue){
 		$this->netValue = $netValue;
+	}
+	
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 }
 

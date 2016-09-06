@@ -41,6 +41,7 @@ class AccountantReportCommissionInvoiceItem extends DocumentItem
 	private $commissionValue;
 	private $commissionNetValue;
 	private $commissionType;
+	private $currency;
 
 	public function getIssueDate(){
 		return $this->issueDate;
@@ -96,6 +97,14 @@ class AccountantReportCommissionInvoiceItem extends DocumentItem
 
 	public function setCommissionType($commissionType){
 		$this->commissionType = $commissionType;
+	}
+
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 }
 

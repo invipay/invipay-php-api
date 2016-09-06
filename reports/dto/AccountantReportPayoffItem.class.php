@@ -43,6 +43,7 @@ class AccountantReportPayoffItem extends DocumentItem
 	private $commissionType;
 	private $settlementValue;
 	private $settlementNetValue;
+	private $currency;
 
 	public function getPayoffDate(){
 		return $this->payoffDate;
@@ -114,6 +115,14 @@ class AccountantReportPayoffItem extends DocumentItem
 
 	public function setSettlementNetValue($settlementNetValue){
 		$this->settlementNetValue = $settlementNetValue;
+	}
+
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 }
 

@@ -36,6 +36,7 @@ class AccountantReportPaymentItem extends DocumentItem
 {
 	private $paymentDate;
 	private $value;
+	private $currency;
 	private $documentId;
 	private $confirmationDocumentId;
 	private $settlementValue;
@@ -57,6 +58,14 @@ class AccountantReportPaymentItem extends DocumentItem
 
 	public function setValue($value){
 		$this->value = $value;
+	}
+
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 
 	public function getDocumentId(){

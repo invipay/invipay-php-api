@@ -37,6 +37,7 @@ class AccountantReportResaleStatementItem extends DocumentItem
 	private $issueDate;
 	private $documentId;
 	private $value;
+	private $currency;
 	private $sourceDocumentId;
 	private $sourceValue;
 	private $originalDocumentId;
@@ -64,6 +65,14 @@ class AccountantReportResaleStatementItem extends DocumentItem
 
 	public function setValue($value){
 		$this->value = $value;
+	}
+	
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 
 	public function getSourceDocumentId(){

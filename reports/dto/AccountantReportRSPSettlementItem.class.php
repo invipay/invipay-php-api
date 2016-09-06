@@ -39,6 +39,7 @@ class AccountantReportRSPSettlementItem extends DocumentItem
 	protected $targetKind;
 	protected $targetDocumentId;
 	protected $settlementValue;
+	protected $currency;
 
 	public function getIssueDate(){
 		return $this->issueDate;
@@ -78,6 +79,14 @@ class AccountantReportRSPSettlementItem extends DocumentItem
 
 	public function setSettlementValue($settlementValue){
 		$this->settlementValue = $settlementValue;
+	}
+	
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 }
 

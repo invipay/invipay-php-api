@@ -38,6 +38,7 @@ class AccountantReportSettlementItem extends DocumentItem
 	private $saleDocumentId;
 	private $purchaseDocumentId;
 	private $value;
+	private $currency;
 
 	public function getOperationDate(){
 		return $this->operationDate;
@@ -69,6 +70,14 @@ class AccountantReportSettlementItem extends DocumentItem
 
 	public function setValue($value){
 		$this->value = $value;
+	}
+
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 }
 

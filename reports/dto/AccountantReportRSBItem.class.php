@@ -38,6 +38,7 @@ class AccountantReportRSBItem extends DocumentItem
 	protected $rsbDocumentId;
 	protected $purchaseDocumentId;
 	protected $purchaseUnsettledValue;
+	protected $currency;
 
 	public function getIssueDate(){
 		return $this->issueDate;
@@ -69,6 +70,14 @@ class AccountantReportRSBItem extends DocumentItem
 
 	public function setPurchaseUnsettledValue($purchaseUnsettledValue){
 		$this->purchaseUnsettledValue = $purchaseUnsettledValue;
+	}
+	
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 }
 

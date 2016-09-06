@@ -38,6 +38,7 @@ class AccountantReportInterestNoteItem extends DocumentItem
 	private $documentId;
 	private $sourceId;
 	private $value;
+	private $currency;
 
 	public function getIssueDate(){
 		return $this->issueDate;
@@ -69,6 +70,14 @@ class AccountantReportInterestNoteItem extends DocumentItem
 
 	public function setValue($value){
 		$this->value = $value;
+	}
+	
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
 	}
 }
 
