@@ -44,6 +44,7 @@ class PaymentData extends BaseApiData
     protected $status;
     protected $note;
     protected $transactionValue;
+    protected $transactionCurrency;
     protected $transactionIssueDate;
     protected $transactionDueDate;
 
@@ -67,6 +68,9 @@ class PaymentData extends BaseApiData
 
     public function getTransactionValue(){ return $this->transactionValue; }
     public function setTransactionValue($transactionValue){ $this->transactionValue = $transactionValue; }
+
+    public function getTransactionCurrency() { return $this->transactionCurrency; }
+    public function setTransactionCurrency($transactionCurrency) { $this->transactionCurrency = $transactionCurrency; }
 
     public function getTransactionIssueDate(){ return $this->transactionIssueDate; }
     public function setTransactionIssueDate($transactionIssueDate){ $this->transactionIssueDate = $transactionIssueDate; }

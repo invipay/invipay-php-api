@@ -36,7 +36,7 @@ class BankAccount
 	protected $number;
 
 	public function getBankName(){ return $this->bankName; }
-	public function setBankName($bankName){ $this->bankName = $bankName; }
+	public function setBankName($bankName = null){ $this->bankName = $bankName; }
 
 	public function getNumber(){ return $this->number; }
 	public function setNumber($number){ $this->number = $number; }

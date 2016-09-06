@@ -30,26 +30,36 @@
 *	DAMAGE.
 */
 
-class ReportFilter
-{
+class ReportFilter {
+	
 	protected $fromDate;
 	protected $toDate;
-
-	public function getFromDate(){
+	protected $currency;
+	
+	public function getFromDate() {
 		return $this->fromDate;
 	}
-
-	public function setFromDate($fromDate){
+	
+	public function setFromDate($fromDate) {
 		$this->fromDate = $fromDate;
 	}
-
-	public function getToDate(){
+	
+	public function getToDate() {
 		return $this->toDate;
 	}
-
-	public function setToDate($toDate){
+	
+	public function setToDate($toDate) {
 		$this->toDate = $toDate;
 	}
+	
+	public function getCurrency() {
+		return $this->currency;
+	}
+	
+	public function setCurrency($currency) {
+		$this->currency = $currency;
+	}
+	
 }
 
 ?>

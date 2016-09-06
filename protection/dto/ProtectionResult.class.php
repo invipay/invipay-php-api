@@ -36,6 +36,7 @@ class ProtectionResult
 {
 	protected $documentNumber;
 	protected $priceGross;
+	protected $currency;
 	protected $exId;
 	protected $transactionId;
 	protected $status;
@@ -46,6 +47,9 @@ class ProtectionResult
 
 	public function getPriceGross(){ return $this->priceGross; }
 	public function setPriceGross($priceGross){ $this->priceGross = $priceGross; }
+
+	public function getCurrency() { return $this->currency; }
+	public function setCurrency($currency) { $this->currency = $currency; }
 
 	public function getExId(){ return $this->exId; }
 	public function setExId($exId){ $this->exId = $exId; }

@@ -44,6 +44,7 @@ class TransactionItemDetails
 	protected $totalPriceGross;
 	protected $totalPriceNet;
 	protected $totalPriceTax;
+	protected $currency;
 
 	public function getId(){ return $this->id; }
 	public function setId($id){ $this->id = $id; }
@@ -77,6 +78,9 @@ class TransactionItemDetails
 
 	public function getTotalPriceTax(){ return $this->totalPriceTax; }
 	public function setTotalPriceTax($totalPriceTax){ $this->totalPriceTax = $totalPriceTax; }
+
+	public function getCurrency() { return $this->currency; }
+	public function setCurrency($currency) { $this->currency = $currency; }
 }
 
 ?>
